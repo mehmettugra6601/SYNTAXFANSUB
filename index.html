@@ -689,7 +689,6 @@
             <h2 id="watch-anime-title" class="section-title" style="margin-bottom: 1.5rem;">Blue Lock</h2>
             
             <div class="syntax-player-wrapper">
-                <!-- Video Elementinde crossorigin KALDIRILDI -->
                 <video id="syntax-video"></video>
                 
                 <div class="player-controls">
@@ -743,7 +742,6 @@
 
     <!-- Video Oynatıcı & Sayfa Mantığı -->
     <script>
-        // Altyazılar yerel klasörden (sitenin kendi dizininden) çağrılıyor
         const animeData = {
             bluelock: {
                 title: "Blue Lock",
@@ -816,7 +814,11 @@
             const video = document.getElementById("syntax-video");
             const playPauseBtn = document.getElementById("play-pause-btn");
             
-            // Eski track etiketlerini sil
+            // Harici sunucudaki (GitHub Releases) video oynatılırken 
+            // yerel VTT dosyasının taranıp okunabilmesi için CrossOrigin izni:
+            video.crossOrigin = "anonymous";
+
+            // Eski track etiketlerini temizle
             while (video.firstChild) {
                 video.removeChild(video.firstChild);
             }
@@ -831,6 +833,14 @@
                 track.src = subSrc;
                 track.default = true;
                 video.appendChild(track);
+                
+                // Bazı tarayıcılarda varsayılan altyazıyı zorla aç
+                track.addEventListener("load", function() {
+                    this.mode = "showing";
+                    if (video.textTracks && video.textTracks[0]) {
+                        video.textTracks[0].mode = "showing";
+                    }
+                });
             }
 
             video.play().then(() => {
