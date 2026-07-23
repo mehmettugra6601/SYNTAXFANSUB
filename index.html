@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SYNTAX FANSUB - Kaliteli anime çeviri, altyazı ve dublaj topluluğu. Akıcı Türkçe ve hassas senkronizasyon ile anime keyfini zirveye taşıyın.">
+    <meta name="author" content="SYNTAX FANSUB">
     <title>SYNTAX FANSUB - Kaliteli Altyazı & Dublaj Topluluğu</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -33,6 +36,13 @@
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* Erişilebilirlik Odak Görünümü */
+        :focus-visible {
+            outline: 2px solid var(--neon-blue);
+            outline-offset: 2px;
+            border-radius: 4px;
         }
 
         /* Background Glows */
@@ -293,7 +303,7 @@
             margin-bottom: 1rem;
         }
 
-        /* Watch / Player View (Hidden by Default) */
+        /* Watch / Player View */
         .watch-view {
             max-width: 1200px;
             margin: 4rem auto;
@@ -348,6 +358,7 @@
             width: 100%;
             display: block;
             aspect-ratio: 16/9;
+            cursor: pointer;
         }
 
         /* Altyazı Özelleştirme */
@@ -587,6 +598,17 @@
                 display: none;
             }
         }
+        
+        @media (max-width: 600px) {
+            .buttons-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .left-controls, .right-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
     </style>
 </head>
 <body>
@@ -597,24 +619,24 @@
     <!-- Navigation -->
     <header>
         <div class="nav-container">
-            <div class="logo" onclick="goHome()">
+            <div tabindex="0" class="logo" onclick="goHome()" onkeydown="if(event.key==='Enter') goHome()">
                 &lt;/&gt; SYNTAX<span>FANSUB</span>
             </div>
             <nav>
                 <ul>
-                    <li><a onclick="goHome()">Ana Sayfa</a></li>
-                    <li><a onclick="scrollToSection('animeler-bolumu')">Animeler</a></li>
-                    <li><a onclick="scrollToSection('hakkimizda')">Hakkımızda</a></li>
-                    <li><a onclick="scrollToSection('ozellikler')">Yaklaşımımız</a></li>
-                    <li><a onclick="scrollToSection('iletisim')">İletişim</a></li>
+                    <li><a tabindex="0" onclick="goHome()" onkeydown="if(event.key==='Enter') goHome()">Ana Sayfa</a></li>
+                    <li><a tabindex="0" onclick="scrollToSection('animeler-bolumu')" onkeydown="if(event.key==='Enter') scrollToSection('animeler-bolumu')">Animeler</a></li>
+                    <li><a tabindex="0" onclick="scrollToSection('hakkimizda')" onkeydown="if(event.key==='Enter') scrollToSection('hakkimizda')">Hakkımızda</a></li>
+                    <li><a tabindex="0" onclick="scrollToSection('ozellikler')" onkeydown="if(event.key==='Enter') scrollToSection('ozellikler')">Yaklaşımımız</a></li>
+                    <li><a tabindex="0" onclick="scrollToSection('iletisim')" onkeydown="if(event.key==='Enter') scrollToSection('iletisim')">İletişim</a></li>
                 </ul>
             </nav>
-            <a href="https://www.youtube.com/channel/UCrhC4nStRWyPF_JNIyuLRcg" target="_blank" class="btn-primary">YouTube Kanalımız</a>
+            <a href="https://www.youtube.com/channel/UCrhC4nStRWyPF_JNIyuLRcg" target="_blank" rel="noopener noreferrer" class="btn-primary" aria-label="YouTube Kanalımıza Git">YouTube Kanalımız</a>
         </div>
     </header>
 
     <!-- Main Content -->
-    <div id="main-content">
+    <main id="main-content">
         <!-- Hero Section -->
         <section class="hero" id="ana-sayfa">
             <div class="hero-text">
@@ -623,12 +645,12 @@
                     SYNTAX FANSUB olarak, en sevdiğiniz içerikleri milisaniyelik senkronizasyon, doğal bir Türkçe dili ve yüksek kaliteli ses/görsel standartlarıyla sunuyoruz. İzleme keyfinizi profesyonel bir çizgiye taşıyoruz.
                 </p>
                 <div class="hero-buttons">
-                    <button onclick="scrollToSection('animeler-bolumu')" class="btn-primary">Animeleri Keşfet</button>
-                    <a href="#iletisim" class="btn-secondary">İletişime Geç</a>
+                    <button onclick="scrollToSection('animeler-bolumu')" class="btn-primary" aria-label="Animeleri Keşfet">Animeleri Keşfet</button>
+                    <a href="#iletisim" class="btn-secondary" aria-label="İletişim Bölümüne Git">İletişime Geç</a>
                 </div>
             </div>
             <div class="hero-image-container">
-                <img src="B.png" alt="SYNTAX FANSUB Banner" class="hero-image">
+                <img src="B.png" alt="SYNTAX FANSUB Afişi" class="hero-image">
             </div>
         </section>
 
@@ -636,9 +658,9 @@
         <section class="anime-catalog-section" id="animeler-bolumu">
             <h2 class="section-title">Yayınlanan Projeler</h2>
             <div class="anime-grid">
-                <div class="anime-card" onclick="openAnime('bluelock')">
+                <div tabindex="0" class="anime-card" onclick="openAnime('bluelock')" onkeydown="if(event.key==='Enter') openAnime('bluelock')" aria-label="Blue Lock animesini aç">
                     <div class="anime-card-img-wrapper">
-                        <img src="blue-lock.jfif" alt="Blue Lock" onerror="this.src='B.png'">
+                        <img src="blue-lock.jfif" alt="Blue Lock Anime Kapağı" onerror="this.src='B.png'">
                         <div class="anime-badge">Sezon 1</div>
                     </div>
                     <div class="anime-card-content">
@@ -646,7 +668,7 @@
                             <h3>Blue Lock</h3>
                             <p>Spor, Rekabet, Aksiyon • Türkçe Altyazılı</p>
                         </div>
-                        <button class="btn-primary" style="width: 100%; text-align: center; margin-top: 1rem;">Hemen İzle</button>
+                        <button class="btn-primary" style="width: 100%; text-align: center; margin-top: 1rem;" tabindex="-1">Hemen İzle</button>
                     </div>
                 </div>
             </div>
@@ -655,17 +677,17 @@
         <!-- Features -->
         <section class="features" id="ozellikler">
             <div class="card">
-                <div class="card-icon">⚡</div>
+                <div class="card-icon" aria-hidden="true">⚡</div>
                 <h3>Hassas Senkronizasyon</h3>
                 <p>Altyazı ve dublaj çalışmalarımızda zamanlama hatalarına yer yok. Sahne akışıyla tam uyumlu milisaniyelik çalışma prensibi.</p>
             </div>
             <div class="card">
-                <div class="card-icon">💬</div>
+                <div class="card-icon" aria-hidden="true">💬</div>
                 <h3>Doğal ve Akıcı Dil</h3>
                 <p>Mekanik çeviriler yerine, hikayenin duygusunu ve karakterlerin ruhunu tam yansıtan akıcı Türkçe yerelleştirme.</p>
             </div>
             <div class="card">
-                <div class="card-icon">🛠️</div>
+                <div class="card-icon" aria-hidden="true">🛠️</div>
                 <h3>Teknolojik Altyapı</h3>
                 <p>Gelişmiş ses düzenleme ve typesetting araçlarımızla içerikleri görsel ve işitsel bir şölene dönüştürüyoruz.</p>
             </div>
@@ -678,11 +700,11 @@
                 SYNTAX FANSUB, sadece bir çeviri ekibi değil; seyir kalitesine değer veren bağımsız bir içerik ve topluluk projesidir. İş disiplinimizden ödün vermeden, samimi ve erişilebilir bir yapıyla projelerimizi hayata geçiriyoruz.
             </p>
         </section>
-    </div>
+    </main>
 
     <!-- Watch / Player View -->
     <section class="watch-view" id="watch-view">
-        <button class="back-btn" onclick="goHome()">
+        <button class="back-btn" onclick="goHome()" aria-label="Ana Sayfaya Dön">
             ← Animelere Dön
         </button>
         <div class="watch-container">
@@ -692,20 +714,20 @@
                 <video id="syntax-video"></video>
                 
                 <div class="player-controls">
-                    <div class="progress-container" id="progress-container">
+                    <div class="progress-container" id="progress-container" aria-label="Video ilerleme çubuğu">
                         <div class="progress-bar" id="progress-bar"></div>
                     </div>
                     
                     <div class="buttons-row">
                         <div class="left-controls">
-                            <button class="control-btn" id="play-pause-btn" title="Oynat/Duraklat">▶️ Oynat</button>
-                            <button class="control-btn" id="rewind-btn" title="10 Saniye Geri">⏪ -10s</button>
-                            <button class="control-btn" id="forward-btn" title="10 Saniye İleri">+10s ⏩</button>
+                            <button class="control-btn" id="play-pause-btn" aria-label="Oynat veya Duraklat">▶️ Oynat</button>
+                            <button class="control-btn" id="rewind-btn" aria-label="10 Saniye Geri Sar">⏪ -10s</button>
+                            <button class="control-btn" id="forward-btn" aria-label="10 Saniye İleri Sar">+10s ⏩</button>
                         </div>
                         
                         <div class="right-controls">
-                            <span id="time-display">00:00 / 00:00</span>
-                            <button class="control-btn" id="fullscreen-btn" title="Tam Ekran">⛶ Tam Ekran</button>
+                            <span id="time-display" aria-live="polite">00:00 / 00:00</span>
+                            <button class="control-btn" id="fullscreen-btn" aria-label="Tam Ekran Yap">⛶ Tam Ekran</button>
                         </div>
                     </div>
                 </div>
@@ -727,7 +749,7 @@
                 <a href="mailto:syntaxfansub@gmail.com" class="contact-item">
                     ✉️ syntaxfansub@gmail.com
                 </a>
-                <a href="https://www.youtube.com/channel/UCrhC4nStRWyPF_JNIyuLRcg" target="_blank" class="contact-item">
+                <a href="https://www.youtube.com/channel/UCrhC4nStRWyPF_JNIyuLRcg" target="_blank" rel="noopener noreferrer" class="contact-item">
                     ▶️ YouTube Kanalımız
                 </a>
             </div>
@@ -799,7 +821,7 @@
         function scrollToSection(sectionId) {
             const watchView = document.getElementById("watch-view");
             if (watchView.classList.contains("active")) {
-                document.getElementById("watch-view").classList.remove("active");
+                watchView.classList.remove("active");
                 document.getElementById("main-content").style.display = "block";
             }
             setTimeout(() => {
@@ -812,7 +834,6 @@
 
         function changeEpisode(videoSrc, subSrc) {
             const video = document.getElementById("syntax-video");
-            const playPauseBtn = document.getElementById("play-pause-btn");
             
             // Harici sunucudaki (GitHub Releases) video oynatılırken 
             // yerel VTT dosyasının taranıp okunabilmesi için CrossOrigin izni:
@@ -843,11 +864,8 @@
                 });
             }
 
-            video.play().then(() => {
-                playPauseBtn.innerHTML = "⏸️ Duraklat";
-            }).catch(e => {
+            video.play().catch(e => {
                 console.log("Otomatik oynatma engellendi, kullanıcının tıklaması bekleniyor.");
-                playPauseBtn.innerHTML = "▶️ Oynat";
             });
         }
 
@@ -862,25 +880,18 @@
             const timeDisplay = document.getElementById("time-display");
             const fullscreenBtn = document.getElementById("fullscreen-btn");
 
-            playPauseBtn.addEventListener("click", () => {
-                if (video.paused) {
-                    video.play();
-                    playPauseBtn.innerHTML = "⏸️ Duraklat";
-                } else {
-                    video.pause();
-                    playPauseBtn.innerHTML = "▶️ Oynat";
-                }
-            });
+            // Buton durumlarını videonun gerçek durumuna senkronize et
+            video.addEventListener('play', () => playPauseBtn.innerHTML = "⏸️ Duraklat");
+            video.addEventListener('pause', () => playPauseBtn.innerHTML = "▶️ Oynat");
+            video.addEventListener("ended", () => playPauseBtn.innerHTML = "▶️ Oynat");
 
-            video.addEventListener("click", () => {
-                if (video.paused) {
-                    video.play();
-                    playPauseBtn.innerHTML = "⏸️ Duraklat";
-                } else {
-                    video.pause();
-                    playPauseBtn.innerHTML = "▶️ Oynat";
-                }
-            });
+            const togglePlay = () => {
+                if (video.paused) video.play();
+                else video.pause();
+            };
+
+            playPauseBtn.addEventListener("click", togglePlay);
+            video.addEventListener("click", togglePlay);
 
             rewindBtn.addEventListener("click", () => {
                 video.currentTime = Math.max(0, video.currentTime - 10);
@@ -888,6 +899,27 @@
 
             forwardBtn.addEventListener("click", () => {
                 video.currentTime = Math.min(video.duration, video.currentTime + 10);
+            });
+
+            // Klavye Kısayolları (Sadece Video Sayfası Açıkken Çalışır)
+            document.addEventListener("keydown", (e) => {
+                if (document.getElementById("watch-view").classList.contains("active")) {
+                    switch(e.code) {
+                        case "Space":
+                            e.preventDefault(); // Sayfayı aşağı kaydırmayı engeller
+                            togglePlay();
+                            break;
+                        case "ArrowRight":
+                            video.currentTime = Math.min(video.duration, video.currentTime + 10);
+                            break;
+                        case "ArrowLeft":
+                            video.currentTime = Math.max(0, video.currentTime - 10);
+                            break;
+                        case "KeyF":
+                            fullscreenBtn.click();
+                            break;
+                    }
+                }
             });
 
             video.addEventListener("timeupdate", () => {
@@ -926,10 +958,6 @@
                 } else {
                     document.exitFullscreen?.();
                 }
-            });
-
-            video.addEventListener("ended", () => {
-                playPauseBtn.innerHTML = "▶️ Oynat";
             });
         });
     </script>
