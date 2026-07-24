@@ -1,17 +1,47 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SYNTAX FANSUB - Kaliteli anime çeviri, altyazı ve dublaj topluluğu. Akıcı Türkçe ve hassas senkronizasyon ile anime keyfini zirveye taşıyın.">
-    <meta name="author" content="SYNTAX FANSUB">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SYNTAX FANSUB - Kaliteli anime çeviri, altyazı ve dublaj topluluğu. Akıcı Türkçe ve hassas senkronizasyon ile anime keyfini zirveye taşıyın." />
+    <meta name="author" content="SYNTAX FANSUB" />
     <title>SYNTAX FANSUB - Kaliteli Altyazı & Dublaj Topluluğu</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts: Inter, JetBrains Mono, Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyber-bg': '#0a0d14',
+                        'cyber-card': 'rgba(19, 24, 38, 0.7)',
+                        'neon-blue': '#00f2fe',
+                        'neon-pink': '#f72585',
+                        'cyber-border': 'rgba(0, 242, 254, 0.15)',
+                        'cyber-text': '#f1f5f9',
+                        'cyber-subtext': '#94a3b8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'neon-glow': '0 0 20px rgba(0, 242, 254, 0.35)',
+                        'pink-glow': '0 0 20px rgba(247, 37, 133, 0.35)',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
+        /* ===== SYNTAX FANSUB Özel Stilleri ===== */
         :root {
             --bg-main: #0a0d14;
             --bg-card: rgba(19, 24, 38, 0.7);
@@ -27,25 +57,24 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
             scroll-behavior: smooth;
         }
 
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Erişilebilirlik Odak Görünümü */
         :focus-visible {
             outline: 2px solid var(--neon-blue);
             outline-offset: 2px;
             border-radius: 4px;
         }
 
-        /* Background Glows */
+        /* Arka plan ışıltıları */
         .glow-1 {
             position: absolute;
             top: -100px;
@@ -57,7 +86,6 @@
             border-radius: 50%;
             z-index: -1;
         }
-
         .glow-2 {
             position: absolute;
             top: 300px;
@@ -70,16 +98,15 @@
             z-index: -1;
         }
 
-        /* Navigation */
+        /* Header */
         header {
             position: sticky;
             top: 0;
             backdrop-filter: blur(12px);
-            background: rgba(10, 13, 20, 0.8);
+            background: rgba(10, 13, 20, 0.85);
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
         }
-
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -88,7 +115,6 @@
             justify-content: space-between;
             align-items: center;
         }
-
         .logo {
             font-weight: 800;
             font-size: 1.5rem;
@@ -101,18 +127,15 @@
             gap: 8px;
             cursor: pointer;
         }
-
         .logo span {
             color: var(--neon-pink);
             -webkit-text-fill-color: var(--neon-pink);
         }
-
         nav ul {
             display: flex;
             list-style: none;
             gap: 2rem;
         }
-
         nav a {
             color: var(--text-muted);
             text-decoration: none;
@@ -120,7 +143,6 @@
             transition: color 0.3s;
             cursor: pointer;
         }
-
         nav a:hover {
             color: var(--neon-blue);
         }
@@ -138,12 +160,10 @@
             border: none;
             cursor: pointer;
         }
-
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
         }
-
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
@@ -156,13 +176,12 @@
             display: inline-block;
             cursor: pointer;
         }
-
         .btn-secondary:hover {
             background: rgba(0, 242, 254, 0.1);
             border-color: var(--neon-blue);
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             max-width: 1200px;
             margin: 0 auto;
@@ -172,32 +191,27 @@
             gap: 3rem;
             align-items: center;
         }
-
         .hero-text h1 {
             font-size: 3rem;
             line-height: 1.2;
             font-weight: 800;
             margin-bottom: 1.2rem;
         }
-
         .hero-text h1 span {
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .hero-text p {
             color: var(--text-muted);
             font-size: 1.1rem;
             margin-bottom: 2rem;
         }
-
         .hero-buttons {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
         }
-
         .hero-image-container {
             position: relative;
             border-radius: 16px;
@@ -205,7 +219,6 @@
             background: linear-gradient(135deg, rgba(0, 242, 254, 0.3), rgba(247, 37, 133, 0.3));
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
-
         .hero-image {
             width: 100%;
             height: auto;
@@ -213,13 +226,12 @@
             display: block;
         }
 
-        /* Anime Catalog Section */
+        /* Anime Katalog */
         .anime-catalog-section {
             max-width: 1200px;
             margin: 4rem auto;
             padding: 0 2rem;
         }
-
         .section-title {
             font-size: 2rem;
             font-weight: 700;
@@ -227,13 +239,11 @@
             border-left: 4px solid var(--neon-blue);
             padding-left: 1rem;
         }
-
         .anime-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 2rem;
         }
-
         .anime-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -244,36 +254,31 @@
             display: flex;
             flex-direction: column;
         }
-
         .anime-card:hover {
             transform: translateY(-8px);
             border-color: var(--neon-blue);
             box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
         }
-
         .anime-card-img-wrapper {
             width: 100%;
             height: 350px;
             overflow: hidden;
             position: relative;
         }
-
         .anime-card-img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s;
         }
-
         .anime-card:hover .anime-card-img-wrapper img {
             transform: scale(1.05);
         }
-
         .anime-badge {
             position: absolute;
             top: 12px;
             right: 12px;
-            background: rgba(10, 13, 20, 0.8);
+            background: rgba(10, 13, 20, 0.85);
             border: 1px solid var(--neon-blue);
             color: var(--neon-blue);
             padding: 4px 10px;
@@ -282,7 +287,6 @@
             border-radius: 20px;
             backdrop-filter: blur(5px);
         }
-
         .anime-card-content {
             padding: 1.5rem;
             display: flex;
@@ -290,164 +294,155 @@
             flex-grow: 1;
             justify-content: space-between;
         }
-
         .anime-card-content h3 {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
             color: var(--text-main);
         }
-
         .anime-card-content p {
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
 
-        /* Watch / Player View */
+        /* Watch View */
         .watch-view {
             max-width: 1200px;
             margin: 4rem auto;
             padding: 0 2rem;
             display: none;
         }
-
         .watch-view.active {
             display: block;
         }
-
         .back-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
             margin-bottom: 1.5rem;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
-
         .back-btn:hover {
             border-color: var(--neon-blue);
             color: var(--neon-blue);
-            background: rgba(0, 242, 254, 0.05);
+            background: rgba(0, 242, 254, 0.08);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
         }
-
         .watch-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 2rem;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+        .watch-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .ep-badge-active {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
-        .syntax-player-wrapper {
-            position: relative;
-            width: 100%;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-            margin-bottom: 2rem;
+        /* ===== AETHER NEON MEDIA PLAYER (Özel Tasarım) ===== */
+        .glass-panel {
+            background: rgba(19, 24, 38, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+        }
+        .glass-panel-hover:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
         }
 
-        #syntax-video {
-            width: 100%;
-            display: block;
-            aspect-ratio: 16/9;
-            cursor: pointer;
+        .ambient-glow {
+            filter: blur(60px);
+            opacity: 0.45;
+            transition: opacity 0.5s ease;
         }
 
-        /* Altyazı Özelleştirme */
-        video::cue {
-            background: rgba(10, 13, 20, 0.85);
-            color: #ffffff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.1rem;
-            padding: 4px 8px;
+        .text-glow-blue {
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
+        }
+        .text-glow-pink {
+            text-shadow: 0 0 10px rgba(247, 37, 133, 0.6);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 13, 20, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 242, 254, 0.2);
             border-radius: 4px;
         }
-
-        .player-controls {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: linear-gradient(transparent, rgba(10, 13, 20, 0.95));
-            padding: 20px 15px 12px 15px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 242, 254, 0.5);
         }
 
-        .progress-container {
+        /* Oynatıcı içindeki iframe'i tam kapla */
+        #screenWrapper iframe {
             width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            margin-bottom: 12px;
-            border-radius: 3px;
-            position: relative;
-        }
-
-        .progress-bar {
             height: 100%;
-            background: var(--neon-blue);
-            width: 0%;
-            border-radius: 3px;
-            transition: width 0.1s linear;
-            box-shadow: 0 0 10px var(--neon-blue);
+            border: none;
+            display: block;
         }
 
-        .buttons-row {
+        /* Bölüm listesi */
+        .episode-section {
+            margin-top: 2rem;
+        }
+        .ep-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
         }
-
-        .left-controls, .right-controls {
+        .ep-header h3 {
+            font-size: 1.2rem;
+            color: var(--text-main);
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
-        .control-btn {
-            background: transparent;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: color 0.2s, transform 0.1s;
-        }
-
-        .control-btn:hover {
+        .ep-header h3 i {
             color: var(--neon-blue);
-            transform: scale(1.05);
         }
-
-        #time-display {
-            font-size: 13px;
+        .ep-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            font-family: monospace;
         }
-
-        .episode-list h3 {
-            color: var(--text-main);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .episode-list ul {
+        .episode-grid {
             list-style: none;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 1rem;
         }
-
-        .episode-list button {
+        .episode-btn {
             width: 100%;
             padding: 1rem;
             background: rgba(255, 255, 255, 0.03);
@@ -455,20 +450,33 @@
             color: var(--text-main);
             text-align: left;
             cursor: pointer;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.2s;
+            border-radius: 12px;
+            font-size: 0.95rem;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.25s ease;
         }
-
-        .episode-list button:hover {
+        .episode-btn:hover {
             background: rgba(0, 242, 254, 0.08);
             border-color: var(--neon-blue);
             color: var(--neon-blue);
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.15);
+        }
+        .episode-btn.active-ep {
+            background: rgba(0, 242, 254, 0.12);
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+        }
+        .ep-playing-icon {
+            font-size: 0.8rem;
+            color: var(--neon-blue);
         }
 
-        /* Feature Cards */
+        /* Features & About */
         .features {
             max-width: 1200px;
             margin: 4rem auto;
@@ -477,7 +485,6 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
-
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -486,29 +493,24 @@
             backdrop-filter: blur(10px);
             transition: transform 0.3s, border-color 0.3s;
         }
-
         .card:hover {
             transform: translateY(-5px);
             border-color: var(--neon-blue);
         }
-
         .card-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
             color: var(--neon-blue);
         }
-
         .card h3 {
             font-size: 1.3rem;
             margin-bottom: 0.8rem;
         }
-
         .card p {
             color: var(--text-muted);
             font-size: 0.95rem;
         }
 
-        /* About Section */
         .about-section {
             max-width: 1200px;
             margin: 6rem auto;
@@ -518,12 +520,10 @@
             border-radius: 20px;
             text-align: center;
         }
-
         .about-section h2 {
             font-size: 2.2rem;
             margin-bottom: 1rem;
         }
-
         .about-section p {
             max-width: 800px;
             margin: 0 auto 2rem auto;
@@ -531,14 +531,13 @@
             font-size: 1.05rem;
         }
 
-        /* Contact Section */
+        /* Contact */
         .contact-section {
             max-width: 1200px;
             margin: 4rem auto 6rem auto;
             padding: 0 2rem;
             text-align: center;
         }
-
         .contact-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -549,14 +548,12 @@
             align-items: center;
             gap: 1.5rem;
         }
-
         .contact-links {
             display: flex;
             gap: 1.5rem;
             flex-wrap: wrap;
             justify-content: center;
         }
-
         .contact-item {
             display: flex;
             align-items: center;
@@ -570,13 +567,38 @@
             font-weight: 500;
             transition: border-color 0.3s, background 0.3s;
         }
-
         .contact-item:hover {
             border-color: var(--neon-blue);
             background: rgba(0, 242, 254, 0.08);
         }
 
-        /* Footer */
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            padding: 12px 20px;
+            background: rgba(19, 24, 38, 0.9);
+            border: 1px solid var(--neon-blue);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            transform: translateY(100px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
         footer {
             border-top: 1px solid var(--border-color);
             padding: 3rem 2rem;
@@ -586,6 +608,7 @@
             background: rgba(10, 13, 20, 0.9);
         }
 
+        /* Responsive */
         @media (max-width: 900px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -598,15 +621,9 @@
                 display: none;
             }
         }
-        
         @media (max-width: 600px) {
-            .buttons-row {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .left-controls, .right-controls {
-                width: 100%;
-                justify-content: space-between;
+            .watch-container {
+                padding: 1rem;
             }
         }
     </style>
@@ -616,7 +633,6 @@
     <div class="glow-1"></div>
     <div class="glow-2"></div>
 
-    <!-- Navigation -->
     <header>
         <div class="nav-container">
             <div tabindex="0" class="logo" onclick="goHome()" onkeydown="if(event.key==='Enter') goHome()">
@@ -635,9 +651,7 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <main id="main-content">
-        <!-- Hero Section -->
         <section class="hero" id="ana-sayfa">
             <div class="hero-text">
                 <h1>Tutku ve Teknoloji <span>SYNTAX Standartlarında</span> Buluşuyor.</h1>
@@ -654,7 +668,6 @@
             </div>
         </section>
 
-        <!-- Anime Catalog Section -->
         <section class="anime-catalog-section" id="animeler-bolumu">
             <h2 class="section-title">Yayınlanan Projeler</h2>
             <div class="anime-grid">
@@ -674,7 +687,6 @@
             </div>
         </section>
 
-        <!-- Features -->
         <section class="features" id="ozellikler">
             <div class="card">
                 <div class="card-icon" aria-hidden="true">⚡</div>
@@ -693,7 +705,6 @@
             </div>
         </section>
 
-        <!-- About Section -->
         <section class="about-section" id="hakkimizda">
             <h2>Hem Kurumsal, Hem Sizden Biri</h2>
             <p>
@@ -702,45 +713,41 @@
         </section>
     </main>
 
-    <!-- Watch / Player View -->
+    <!-- ===== WATCH VIEW (Özel Neon Oynatıcı ile) ===== -->
     <section class="watch-view" id="watch-view">
         <button class="back-btn" onclick="goHome()" aria-label="Ana Sayfaya Dön">
-            ← Animelere Dön
+            <i class="fa-solid fa-arrow-left"></i> Animelere Dön
         </button>
+
         <div class="watch-container">
-            <h2 id="watch-anime-title" class="section-title" style="margin-bottom: 1.5rem;">Blue Lock</h2>
-            
-            <div class="syntax-player-wrapper">
-                <video id="syntax-video"></video>
-                
-                <div class="player-controls">
-                    <div class="progress-container" id="progress-container" aria-label="Video ilerleme çubuğu">
-                        <div class="progress-bar" id="progress-bar"></div>
-                    </div>
-                    
-                    <div class="buttons-row">
-                        <div class="left-controls">
-                            <button class="control-btn" id="play-pause-btn" aria-label="Oynat veya Duraklat">▶️ Oynat</button>
-                            <button class="control-btn" id="rewind-btn" aria-label="10 Saniye Geri Sar">⏪ -10s</button>
-                            <button class="control-btn" id="forward-btn" aria-label="10 Saniye İleri Sar">+10s ⏩</button>
-                        </div>
-                        
-                        <div class="right-controls">
-                            <span id="time-display" aria-live="polite">00:00 / 00:00</span>
-                            <button class="control-btn" id="fullscreen-btn" aria-label="Tam Ekran Yap">⛶ Tam Ekran</button>
-                        </div>
-                    </div>
+            <div class="watch-header">
+                <h2 id="watch-anime-title" class="section-title" style="margin-bottom: 0;">Blue Lock</h2>
+                <div id="watch-episode-badge" class="ep-badge-active">1. Bölüm</div>
+            </div>
+
+            <!-- Neon Oynatıcı Kapsayıcısı -->
+            <div class="syntax-player-container glass-panel p-2 md:p-4 shadow-2xl overflow-hidden relative">
+                <!-- Ambiyans Işıltısı (canlı gradient) -->
+                <canvas id="ambientCanvas" class="ambient-glow absolute inset-0 w-full h-full pointer-events-none scale-110 z-0"></canvas>
+
+                <!-- Ekran Kapsayıcısı -->
+                <div id="screenWrapper" class="relative w-full aspect-video bg-black/80 rounded-xl overflow-hidden border border-cyber-border z-10">
+                    <!-- İFRAME KORUNUYOR -->
+                    <iframe id="syntax-iframe" src="" frameborder="0" allowfullscreen style="width:100%; height:100%;"></iframe>
                 </div>
             </div>
 
-            <div class="episode-list">
-                <h3>Bölüm Seçimi</h3>
-                <ul id="episode-list-container"></ul>
+            <div class="episode-section">
+                <div class="ep-header">
+                    <h3><i class="fa-solid fa-list-ul"></i> Bölüm Seçimi</h3>
+                    <span id="ep-count-badge" class="ep-count">2 Bölüm</span>
+                </div>
+                <ul id="episode-list-container" class="episode-grid"></ul>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact -->
     <section class="contact-section" id="iletisim">
         <div class="contact-container">
             <h2>Bizimle İletişime Geçin</h2>
@@ -756,63 +763,80 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <div id="toast">
+        <i id="toastIcon" class="fa-solid fa-circle-info text-neon"></i>
+        <span id="toastMsg">Bildirim</span>
+    </div>
+
     <footer>
         <p>© 2026 SYNTAX FANSUB. Tüm İçerikler Kamu Malıdır (CC0 1.0 Universal - Public Domain).</p>
         <p style="margin-top: 0.5rem; font-size: 0.85rem;">Sevgi, tutku ve SYNTAX kalitesiyle hazırlandı.</p>
     </footer>
 
-    <!-- Video Oynatıcı & Sayfa Mantığı -->
     <script>
+        // ===== SYNTAX FANSUB VERİ VE KONTROL =====
         const animeData = {
             bluelock: {
                 title: "Blue Lock",
                 episodes: [
-                    { 
-                        title: "1. Bölüm: Hayal", 
-                        src: "https://github.com/mehmettugra6601/SYNTAXFANSUB/releases/download/1.0.0/output1.mp4",
-                        sub: "altyazi1.vtt"
-                    },
-                    { 
-                        title: "2. Bölüm: Canavar", 
-                        src: "https://github.com/mehmettugra6601/SYNTAXFANSUB/releases/download/1.0.0/output2.mp4",
-                        sub: "altyazi2.vtt"
-                    }
+                    { title: "1. Bölüm: Hayal", src: "https://video.sibnet.ru/shell.php?videoid=6249980" },
+                    { title: "2. Bölüm: Canavar", src: "https://video.sibnet.ru/shell.php?videoid=6249981" }
                 ]
             }
         };
+
+        let currentActiveAnime = null;
+        let currentActiveEpIndex = 0;
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
 
         function openAnime(animeId) {
             const data = animeData[animeId];
             if (!data) return;
 
+            currentActiveAnime = data;
+            currentActiveEpIndex = 0;
+
             document.getElementById("main-content").style.display = "none";
             document.getElementById("watch-view").classList.add("active");
             document.getElementById("watch-anime-title").innerText = data.title;
+            document.getElementById("ep-count-badge").innerText = `${data.episodes.length} Bölüm`;
 
-            const epList = document.getElementById("episode-list-container");
-            epList.innerHTML = "";
-
-            data.episodes.forEach((ep) => {
-                const li = document.createElement("li");
-                const btn = document.createElement("button");
-                btn.innerHTML = ep.title;
-                btn.onclick = () => changeEpisode(ep.src, ep.sub);
-                li.appendChild(btn);
-                epList.appendChild(li);
-            });
+            renderEpisodeList();
 
             if (data.episodes.length > 0) {
-                changeEpisode(data.episodes[0].src, data.episodes[0].sub);
+                changeEpisode(0);
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        function renderEpisodeList() {
+            if (!currentActiveAnime) return;
+            const epList = document.getElementById("episode-list-container");
+            epList.innerHTML = "";
+
+            currentActiveAnime.episodes.forEach((ep, index) => {
+                const li = document.createElement("li");
+                const btn = document.createElement("button");
+                btn.className = `episode-btn ${index === currentActiveEpIndex ? 'active-ep' : ''}`;
+                btn.innerHTML = `
+                    <span>${ep.title}</span>
+                    <i class="fa-solid ${index === currentActiveEpIndex ? 'fa-circle-play ep-playing-icon' : 'fa-play'}"></i>
+                `;
+                btn.onclick = () => changeEpisode(index);
+                li.appendChild(btn);
+                epList.appendChild(li);
+            });
+        }
+
         function goHome() {
-            const video = document.getElementById("syntax-video");
-            video.pause();
-            
             document.getElementById("watch-view").classList.remove("active");
             document.getElementById("main-content").style.display = "block";
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -826,139 +850,53 @@
             }
             setTimeout(() => {
                 const element = document.getElementById(sectionId);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
             }, 50);
         }
 
-        function changeEpisode(videoSrc, subSrc) {
-            const video = document.getElementById("syntax-video");
-            
-            // Harici sunucudaki (GitHub Releases) video oynatılırken 
-            // yerel VTT dosyasının taranıp okunabilmesi için CrossOrigin izni:
-            video.crossOrigin = "anonymous";
+        function changeEpisode(index) {
+            if (!currentActiveAnime || !currentActiveAnime.episodes[index]) return;
 
-            // Eski track etiketlerini temizle
-            while (video.firstChild) {
-                video.removeChild(video.firstChild);
-            }
+            currentActiveEpIndex = index;
+            const ep = currentActiveAnime.episodes[index];
 
-            video.src = videoSrc;
+            document.getElementById("watch-episode-badge").innerText = ep.title.split(':')[0] || ep.title;
+            document.getElementById("syntax-iframe").src = ep.src;
 
-            if (subSrc) {
-                const track = document.createElement("track");
-                track.kind = "subtitles";
-                track.label = "Türkçe";
-                track.srclang = "tr";
-                track.src = subSrc;
-                track.default = true;
-                video.appendChild(track);
-                
-                // Bazı tarayıcılarda varsayılan altyazıyı zorla aç
-                track.addEventListener("load", function() {
-                    this.mode = "showing";
-                    if (video.textTracks && video.textTracks[0]) {
-                        video.textTracks[0].mode = "showing";
-                    }
-                });
-            }
-
-            video.play().catch(e => {
-                console.log("Otomatik oynatma engellendi, kullanıcının tıklaması bekleniyor.");
-            });
+            renderEpisodeList();
+            showToast(`${ep.title} Oynatılıyor`);
         }
 
-        // Oynatıcı Kontrolleri
+        // ===== AMBİYANS IŞILTISI (CANLI GRADIENT) =====
         document.addEventListener("DOMContentLoaded", function() {
-            const video = document.getElementById("syntax-video");
-            const playPauseBtn = document.getElementById("play-pause-btn");
-            const rewindBtn = document.getElementById("rewind-btn");
-            const forwardBtn = document.getElementById("forward-btn");
-            const progressContainer = document.getElementById("progress-container");
-            const progressBar = document.getElementById("progress-bar");
-            const timeDisplay = document.getElementById("time-display");
-            const fullscreenBtn = document.getElementById("fullscreen-btn");
+            const ambientCanvas = document.getElementById('ambientCanvas');
+            const ambientCtx = ambientCanvas.getContext('2d');
 
-            // Buton durumlarını videonun gerçek durumuna senkronize et
-            video.addEventListener('play', () => playPauseBtn.innerHTML = "⏸️ Duraklat");
-            video.addEventListener('pause', () => playPauseBtn.innerHTML = "▶️ Oynat");
-            video.addEventListener("ended", () => playPauseBtn.innerHTML = "▶️ Oynat");
+            let hue = 0;
 
-            const togglePlay = () => {
-                if (video.paused) video.play();
-                else video.pause();
-            };
+            function renderAmbientGlow() {
+                const rect = ambientCanvas.parentElement.getBoundingClientRect();
+                ambientCanvas.width = rect.width || 160;
+                ambientCanvas.height = rect.height || 90;
 
-            playPauseBtn.addEventListener("click", togglePlay);
-            video.addEventListener("click", togglePlay);
+                const gradient = ambientCtx.createRadialGradient(
+                    ambientCanvas.width * 0.5, ambientCanvas.height * 0.5, 0,
+                    ambientCanvas.width * 0.5, ambientCanvas.height * 0.5, ambientCanvas.width * 0.7
+                );
+                const color1 = `hsla(${hue}, 80%, 50%, 0.15)`;
+                const color2 = `hsla(${hue + 60}, 80%, 60%, 0.08)`;
+                gradient.addColorStop(0, color1);
+                gradient.addColorStop(1, color2);
 
-            rewindBtn.addEventListener("click", () => {
-                video.currentTime = Math.max(0, video.currentTime - 10);
-            });
+                ambientCtx.clearRect(0, 0, ambientCanvas.width, ambientCanvas.height);
+                ambientCtx.fillStyle = gradient;
+                ambientCtx.fillRect(0, 0, ambientCanvas.width, ambientCanvas.height);
 
-            forwardBtn.addEventListener("click", () => {
-                video.currentTime = Math.min(video.duration, video.currentTime + 10);
-            });
+                hue = (hue + 0.5) % 360;
+                requestAnimationFrame(renderAmbientGlow);
+            }
 
-            // Klavye Kısayolları (Sadece Video Sayfası Açıkken Çalışır)
-            document.addEventListener("keydown", (e) => {
-                if (document.getElementById("watch-view").classList.contains("active")) {
-                    switch(e.code) {
-                        case "Space":
-                            e.preventDefault(); // Sayfayı aşağı kaydırmayı engeller
-                            togglePlay();
-                            break;
-                        case "ArrowRight":
-                            video.currentTime = Math.min(video.duration, video.currentTime + 10);
-                            break;
-                        case "ArrowLeft":
-                            video.currentTime = Math.max(0, video.currentTime - 10);
-                            break;
-                        case "KeyF":
-                            fullscreenBtn.click();
-                            break;
-                    }
-                }
-            });
-
-            video.addEventListener("timeupdate", () => {
-                if(!video.duration) return;
-                const percent = (video.currentTime / video.duration) * 100;
-                progressBar.style.width = `${percent}%`;
-
-                let currentMins = Math.floor(video.currentTime / 60);
-                let currentSecs = Math.floor(video.currentTime % 60);
-                let durationMins = Math.floor(video.duration / 60);
-                let durationSecs = Math.floor(video.duration % 60);
-
-                if(currentSecs < 10) currentSecs = "0" + currentSecs;
-                if(durationSecs < 10) durationSecs = "0" + durationSecs;
-
-                if (isNaN(durationMins)) {
-                    timeDisplay.innerHTML = `${currentMins}:${currentSecs} / 00:00`;
-                } else {
-                    timeDisplay.innerHTML = `${currentMins}:${currentSecs} / ${durationMins}:${durationSecs}`;
-                }
-            });
-
-            progressContainer.addEventListener("click", (e) => {
-                const width = progressContainer.clientWidth;
-                const clickX = e.offsetX;
-                const duration = video.duration;
-                if(duration) {
-                    video.currentTime = (clickX / width) * duration;
-                }
-            });
-
-            fullscreenBtn.addEventListener("click", () => {
-                const playerWrapper = document.querySelector('.syntax-player-wrapper');
-                if (!document.fullscreenElement) {
-                    playerWrapper.requestFullscreen?.();
-                } else {
-                    document.exitFullscreen?.();
-                }
-            });
+            renderAmbientGlow();
         });
     </script>
 </body>
