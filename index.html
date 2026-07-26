@@ -916,6 +916,21 @@
                     </div>
                 </div>
 
+                <!-- Alya Duygularını Rusça Saklıyor Kartı -->
+                <div tabindex="0" class="anime-card" onclick="openAnime('alya')" onkeydown="if(event.key==='Enter') openAnime('alya')" aria-label="Alya Duygularını Rusça Saklıyor animesini aç">
+                    <div class="anime-card-img-wrapper">
+                        <img src="alya.jfif" alt="Alya Duygularını Rusça Saklıyor Anime Kapağı" onerror="this.src='syn-chan.png'">
+                        <div class="anime-badge">Sezon 1</div>
+                    </div>
+                    <div class="anime-card-content">
+                        <div>
+                            <h3>Alya Duygularını Rusça Saklıyor</h3>
+                            <p>Romantik, Komedi, Okul • Türkçe Altyazılı</p>
+                        </div>
+                        <button class="btn-primary" style="width: 100%; text-align: center; margin-top: 1rem;" tabindex="-1">Hemen İzle</button>
+                    </div>
+                </div>
+
                 <!-- Horimiya Kartı -->
                 <div tabindex="0" class="anime-card" onclick="openAnime('horimiya')" onkeydown="if(event.key==='Enter') openAnime('horimiya')" aria-label="Horimiya animesini aç">
                     <div class="anime-card-img-wrapper">
@@ -1109,13 +1124,34 @@
                     { 
                         title: "1. Bölüm: Hayal", 
                         servers: [
+                            { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/1coS2hzifRoaO2oiqZ2gQeJJJrv_nBggP/preview" },
                             { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6250244" }
                         ]
                     },
                     { 
                         title: "2. Bölüm: Canavar", 
                         servers: [
+                            { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/1I-wTXGlM5DSoQRfGGriizFEKOnTpJetp/preview" },
                             { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6250243" }
+                        ]
+                    }
+                ]
+            },
+            alya: {
+                title: "Alya Duygularını Rusça Saklıyor",
+                episodes: [
+                    { 
+                        title: "1. Bölüm", 
+                        servers: [
+                            { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6251770" },
+                            { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/1-Jz41N8X8M0Y-nT_YvoifHBeE2mXdITS/preview" }
+                        ]
+                    },
+                    { 
+                        title: "2. Bölüm", 
+                        servers: [
+                            { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6251774" },
+                            { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/1RbuU36H9J_rjhU9faeiB71UCVmSgE4xL/preview" }
                         ]
                     }
                 ]
