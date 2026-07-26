@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether Neon Media Player</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyber-bg': '#0a0d14',
+                        'cyber-card': 'rgba(19, 24, 38, 0.7)',
+                        'neon-blue': '#00f2fe',
+                        'neon-pink': '#f72585',
+                        'cyber-border': 'rgba(0, 242, 254, 0.15)',
+                        'cyber-text': '#f1f5f9',
+                        'cyber-subtext': '#94a3b8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'neon-glow': '0 0 20px rgba(0, 242, 254, 0.35)',
+                        'pink-glow': '0 0 20px rgba(247, 37, 133, 0.35)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0d14;
+            color: #f1f5f9;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(19, 24, 38, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+        }
+
+        .glass-panel-hover:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+
+        /* Custom Range Input Styling */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(148, 163, 184, 0.2);
+            border-radius: 9999px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #00f2fe;
+            cursor: pointer;
+            box-shadow: 0 0 10px #00f2fe;
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.25);
+            background: #ffffff;
+            box-shadow: 0 0 15px #00f2fe, 0 0 25px #f72585;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 13, 20, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 242, 254, 0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 242, 254, 0.5);
+        }
+
+        /* Neon Glow Effects */
+        .text-glow-blue {
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
+        }
+        .text-glow-pink {
+            text-shadow: 0 0 10px rgba(247, 37, 133, 0.6);
+        }
+
+        .ambient-glow {
+            filter: blur(60px);
+            opacity: 0.45;
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-neon-pink selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="w-full glass-panel sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-neon-blue to-neon-pink p-[2px] flex items-center justify-center shadow-neon-glow">
+                <div class="w-full h-full bg-cyber-bg rounded-[10px] flex items-center justify-center">
+                    <i class="fa-solid font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink fa-play text-lg pl-0.5"></i>
+                </div>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold tracking-wider text-cyber-text flex items-center gap-2">
+                    AETHER <span class="text-xs px-2 py-0.5 rounded-full bg-neon-blue/10 border border-neon-blue/30 text-neon-blue font-mono">NEON PLAYER</span>
+                </h1>
+                <p class="text-xs text-cyber-subtext">Gelişmiş Web Medya Deneyimi</p>
+            </div>
+        </div>
+
+        <!-- Action Controls in Header -->
+        <div class="flex items-center space-x-3">
+            <button id="shortcutsBtn" class="w-9 h-9 rounded-xl text-xs text-cyber-subtext glass-panel glass-panel-hover flex items-center justify-center hover:text-neon-blue transition-all" title="Klavye Kısayolları">
+                <i class="fa-solid fa-keyboard"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto px-4 py-6 max-w-6xl flex-grow flex flex-col items-center justify-center">
+        
+        <!-- Media Container Box -->
+        <div class="relative w-full rounded-2xl glass-panel p-2 md:p-4 mb-6 shadow-2xl overflow-hidden group">
+            
+            <!-- Ambient Glow Effect behind Video -->
+            <canvas id="ambientCanvas" class="absolute inset-0 w-full h-full ambient-glow pointer-events-none scale-110 z-0"></canvas>
+
+            <!-- Video & Audio Visualizer Screen Wrapper -->
+            <div id="screenWrapper" class="relative w-full aspect-video bg-black/80 rounded-xl overflow-hidden border border-cyber-border flex items-center justify-center z-10">
+                
+                <!-- HTML5 Video Element -->
+                <video id="mediaPlayer" class="w-full h-full object-contain cursor-pointer" playsinline>
+                    
+                    Tarayıcınız video oynatmayı desteklemiyor.
+                </video>
+
+                <!-- Audio Visualizer Canvas (Active when playing audio or toggled) -->
+                <canvas id="visualizerCanvas" class="absolute inset-0 w-full h-full pointer-events-none hidden"></canvas>
+
+                <!-- Audio Cover Art Display (For audio-only files) -->
+                <div id="audioCover" class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-cyber-bg/90 to-cyber-bg hidden">
+                    <div class="w-28 h-28 md:w-36 md:h-36 rounded-full border-2 border-neon-blue/30 p-2 flex items-center justify-center shadow-neon-glow animate-pulse">
+                        <div class="w-full h-full rounded-full bg-gradient-to-tr from-neon-blue/20 to-neon-pink/20 flex items-center justify-center">
+                            <i class="fa-solid fa-music text-4xl text-neon-blue"></i>
+                        </div>
+                    </div>
+                    <h3 id="audioTitle" class="mt-4 text-base font-semibold text-cyber-text">Müzik Dosyası</h3>
+                    <p id="audioArtist" class="text-xs text-cyber-subtext">Aether Player Visualizer Active</p>
+                </div>
+
+                <!-- Overlay Center Play/Pause Animated Pulse Indicator -->
+                <div id="centerPlayIndicator" class="absolute w-16 h-16 rounded-full bg-cyber-bg/70 border border-neon-blue text-neon-blue flex items-center justify-center text-2xl opacity-0 transition-all pointer-events-none transform scale-75">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+
+                <!-- Custom Overlay Player Controls (Bottom of Video) -->
+                <div id="customControls" class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-cyber-bg via-cyber-bg/80 to-transparent p-3 md:p-5 transition-opacity duration-300 opacity-100 flex flex-col justify-end space-y-3">
+                    
+                    <!-- Seek Bar & Time Tooltip -->
+                    <div class="relative w-full group/seek flex items-center">
+                        <input type="range" id="seekBar" min="0" max="100" value="0" step="0.1" class="w-full h-1.5 cursor-pointer z-10 accent-neon-blue">
+                        <!-- Progress Buffer Bar -->
+                        <div id="bufferedBar" class="absolute left-0 h-1.5 bg-cyber-subtext/30 rounded-full pointer-events-none w-0"></div>
+                        <!-- Fill Progress Glow Bar -->
+                        <div id="progressFill" class="absolute left-0 h-1.5 bg-gradient-to-r from-neon-blue to-neon-pink rounded-full pointer-events-none w-0 shadow-neon-glow"></div>
+                    </div>
+
+                    <!-- Bottom Bar Control Icons -->
+                    <div class="flex items-center justify-between text-sm pt-1">
+                        
+                        <!-- Left Group: Play/Pause, Skip, Volume, Time -->
+                        <div class="flex items-center space-x-3 md:space-x-4">
+                            <button id="playPauseBtn" class="w-10 h-10 rounded-xl bg-neon-blue/10 border border-neon-blue/30 text-neon-blue hover:bg-neon-blue hover:text-cyber-bg transition-all flex items-center justify-center shadow-neon-glow" title="Oynat / Durdur (Space)">
+                                <i class="fa-solid fa-play text-base"></i>
+                            </button>
+
+                            <button id="rewindBtn" class="text-cyber-subtext hover:text-neon-blue transition-colors p-1" title="5 Saniye Geri">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+
+                            <button id="forwardBtn" class="text-cyber-subtext hover:text-neon-blue transition-colors p-1" title="5 Saniye İleri">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+
+                            <!-- Volume Controls -->
+                            <div class="flex items-center space-x-2 group/vol">
+                                <button id="muteBtn" class="text-cyber-subtext hover:text-neon-blue transition-colors p-1" title="Sesi Kapat/Aç">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                </button>
+                                <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.8" class="w-16 md:w-20 h-1 cursor-pointer">
+                            </div>
+
+                            <!-- Time Indicator -->
+                            <div class="font-mono text-xs text-cyber-subtext">
+                                <span id="currentTime" class="text-cyber-text">00:00</span> / <span id="durationTime">00:00</span>
+                            </div>
+                        </div>
+
+                        <!-- Right Group: Speeds, Visualizer, PiP, Fullscreen -->
+                        <div class="flex items-center space-x-2 md:space-x-3">
+                            
+                            <!-- Ambient Glow Toggle -->
+                            <button id="toggleGlowBtn" class="w-8 h-8 rounded-lg text-cyber-subtext hover:text-neon-pink hover:bg-neon-pink/10 transition-all flex items-center justify-center" title="Aura Parlaması">
+                                <i class="fa-solid fa-sun"></i>
+                            </button>
+
+                            <!-- Visualizer Mode Toggle -->
+                            <button id="toggleVisualizerBtn" class="w-8 h-8 rounded-lg text-cyber-subtext hover:text-neon-blue hover:bg-neon-blue/10 transition-all flex items-center justify-center" title="Ses Görselleştirici Modu">
+                                <i class="fa-solid fa-chart-simple"></i>
+                            </button>
+
+                            <!-- Speed Dropdown Button -->
+                            <div class="relative group/speed">
+                                <button id="speedBtn" class="font-mono text-xs text-cyber-subtext hover:text-neon-blue px-2 py-1 rounded-lg border border-transparent hover:border-cyber-border transition-all">
+                                    1.0x
+                                </button>
+                                <div class="absolute bottom-full right-0 mb-2 w-20 glass-panel rounded-xl overflow-hidden hidden group-hover/speed:block p-1 text-xs">
+                                    <button class="speed-opt w-full text-left px-2 py-1 hover:bg-neon-blue/20 rounded text-cyber-subtext hover:text-neon-blue" data-speed="0.5">0.5x</button>
+                                    <button class="speed-opt w-full text-left px-2 py-1 hover:bg-neon-blue/20 rounded text-cyber-subtext hover:text-neon-blue" data-speed="1.0">1.0x</button>
+                                    <button class="speed-opt w-full text-left px-2 py-1 hover:bg-neon-blue/20 rounded text-cyber-subtext hover:text-neon-blue" data-speed="1.25">1.25x</button>
+                                    <button class="speed-opt w-full text-left px-2 py-1 hover:bg-neon-blue/20 rounded text-cyber-subtext hover:text-neon-blue" data-speed="1.5">1.5x</button>
+                                    <button class="speed-opt w-full text-left px-2 py-1 hover:bg-neon-blue/20 rounded text-cyber-subtext hover:text-neon-blue" data-speed="2.0">2.0x</button>
+                                </div>
+                            </div>
+
+                            <!-- Picture-in-Picture -->
+                            <button id="pipBtn" class="w-8 h-8 rounded-lg text-cyber-subtext hover:text-neon-blue hover:bg-neon-blue/10 transition-all flex items-center justify-center hidden sm:flex" title="Resim içinde Resim">
+                                <i class="fa-solid fa-clone"></i>
+                            </button>
+
+                            <!-- Fullscreen -->
+                            <button id="fullscreenBtn" class="w-8 h-8 rounded-lg text-cyber-subtext hover:text-neon-blue hover:bg-neon-blue/10 transition-all flex items-center justify-center" title="Tam Ekran (F)">
+                                <i class="fa-solid fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </main>
+
+    <!-- Shortcuts Modal -->
+    <div id="shortcutsModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="glass-panel w-full max-w-md rounded-2xl p-6 shadow-2xl relative border border-cyber-border">
+            <h3 class="text-base font-bold text-cyber-text mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-keyboard text-neon-pink"></i> Klavye Kısayolları
+            </h3>
+            <div class="space-y-2.5 text-xs">
+                <div class="flex justify-between items-center"><span class="text-cyber-subtext">Oynat / Duraklat</span><kbd class="px-2 py-1 rounded bg-cyber-bg border border-cyber-border font-mono text-neon-blue">Space</kbd></div>
+                <div class="flex justify-between items-center"><span class="text-cyber-subtext">Sesi Aç / Kapat</span><kbd class="px-2 py-1 rounded bg-cyber-bg border border-cyber-border font-mono text-neon-blue">M</kbd></div>
+                <div class="flex justify-between items-center"><span class="text-cyber-subtext">Tam Ekran</span><kbd class="px-2 py-1 rounded bg-cyber-bg border border-cyber-border font-mono text-neon-blue">F</kbd></div>
+                <div class="flex justify-between items-center"><span class="text-cyber-subtext">5 Saniye Geri / İleri</span><kbd class="px-2 py-1 rounded bg-cyber-bg border border-cyber-border font-mono text-neon-blue">← / →</kbd></div>
+                <div class="flex justify-between items-center"><span class="text-cyber-subtext">Ses Seviyesi + / -</span><kbd class="px-2 py-1 rounded bg-cyber-bg border border-cyber-border font-mono text-neon-blue">↑ / ↓</kbd></div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button id="closeShortcutsBtn" class="px-4 py-2 rounded-xl text-xs bg-neon-blue/10 text-neon-blue border border-neon-blue/30 hover:bg-neon-blue hover:text-cyber-bg transition-all">Anlaşıldı</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Box -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl glass-panel text-xs text-cyber-text shadow-neon-glow border-neon-blue flex items-center space-x-2 transition-all transform translate-y-20 opacity-0 pointer-events-none">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-neon-blue"></i>
+        <span id="toastMsg">Bildirim mesajı</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full glass-panel py-3 px-6 text-center text-xs text-cyber-subtext border-t border-cyber-border/40">
+        <p>Aether Neon Media Player &copy; 2026 - Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('mediaPlayer');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const seekBar = document.getElementById('seekBar');
+            const bufferedBar = document.getElementById('bufferedBar');
+            const progressFill = document.getElementById('progressFill');
+            const currentTimeEl = document.getElementById('currentTime');
+            const durationTimeEl = document.getElementById('durationTime');
+            const muteBtn = document.getElementById('muteBtn');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const pipBtn = document.getElementById('pipBtn');
+            const rewindBtn = document.getElementById('rewindBtn');
+            const forwardBtn = document.getElementById('forwardBtn');
+            const customControls = document.getElementById('customControls');
+            const screenWrapper = document.getElementById('screenWrapper');
+            const centerPlayIndicator = document.getElementById('centerPlayIndicator');
+
+            // Visualizer & Ambient Glow Canvas
+            const visualizerCanvas = document.getElementById('visualizerCanvas');
+            const visualizerCtx = visualizerCanvas.getContext('2d');
+            const ambientCanvas = document.getElementById('ambientCanvas');
+            const ambientCtx = ambientCanvas.getContext('2d');
+            const audioCover = document.getElementById('audioCover');
+
+            // Header & Modals
+            
+            const shortcutsBtn = document.getElementById('shortcutsBtn');
+            const shortcutsModal = document.getElementById('shortcutsModal');
+            const closeShortcutsBtn = document.getElementById('closeShortcutsBtn');
+
+            // Displays
+            const mediaTitleDisplay = document.getElementById('mediaTitleDisplay');
+            const mediaDescDisplay = document.getElementById('mediaDescDisplay');
+            const statusBadge = document.getElementById('statusBadge');
+            const formatBadge = document.getElementById('formatBadge');
+
+            // Visualizer Web Audio API State
+            let audioCtx = null;
+            let analyser = null;
+            let audioSource = null;
+            let isVisualizerActive = false;
+            let isGlowActive = true;
+            let controlsTimeout = null;
+
+            // Format Seconds helper
+            function formatTime(seconds) {
+                if (isNaN(seconds)) return '00:00';
+                const m = Math.floor(seconds / 60);
+                const s = Math.floor(seconds % 60);
+                return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+            }
+
+            // Show Toast Notification
+            function showToast(msg, icon = 'fa-circle-check') {
+                const toast = document.getElementById('toast');
+                const toastMsg = document.getElementById('toastMsg');
+                const toastIcon = document.getElementById('toastIcon');
+                
+                toastMsg.innerText = msg;
+                toastIcon.className = `fa-solid ${icon} text-neon-blue`;
+                
+                toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+                }, 2500);
+            }
+
+            function togglePlay() {
+                if (video.paused || video.ended) {
+                    video.play().then(() => {
+                        initAudioContext();
+                    }).catch(e => console.warn(e));
+                } else {
+                    video.pause();
+                }
+            }
+
+            function updatePlayIcon() {
+                if (video.paused) {
+                    playPauseBtn.innerHTML = '<i class="fa-solid fa-play text-base"></i>';
+                    statusBadge.innerText = "Duraklatıldı";
+                    statusBadge.className = "text-amber-400 font-mono";
+                    showCenterIndicator('fa-pause');
+                } else {
+                    playPauseBtn.innerHTML = '<i class="fa-solid fa-pause text-base"></i>';
+                    statusBadge.innerText = "Oynatılıyor";
+                    statusBadge.className = "text-emerald-400 font-mono";
+                    showCenterIndicator('fa-play');
+                }
+            }
+
+            function showCenterIndicator(iconClass) {
+                centerPlayIndicator.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+                centerPlayIndicator.classList.remove('opacity-0', 'scale-75');
+                centerPlayIndicator.classList.add('opacity-100', 'scale-100');
+                setTimeout(() => {
+                    centerPlayIndicator.classList.remove('opacity-100', 'scale-100');
+                    centerPlayIndicator.classList.add('opacity-0', 'scale-75');
+                }, 400);
+            }
+
+            function updateProgress() {
+                const progress = (video.currentTime / video.duration) * 100 || 0;
+                seekBar.value = progress;
+                progressFill.style.width = `${progress}%`;
+                currentTimeEl.innerText = formatTime(video.currentTime);
+                durationTimeEl.innerText = formatTime(video.duration);
+
+                // Update Buffer Bar
+                if (video.buffered.length > 0) {
+                    const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+                    const duration = video.duration;
+                    if (duration > 0) {
+                        bufferedBar.style.width = `${(bufferedEnd / duration) * 100}%`;
+                    }
+                }
+            }
+
+            seekBar.addEventListener('input', () => {
+                const seekTo = (seekBar.value / 100) * video.duration;
+                video.currentTime = seekTo;
+                progressFill.style.width = `${seekBar.value}%`;
+            });
+
+            volumeSlider.addEventListener('input', (e) => {
+                video.volume = e.target.value;
+                video.muted = (e.target.value == 0);
+                updateVolumeIcon();
+            });
+
+            muteBtn.addEventListener('click', () => {
+                video.muted = !video.muted;
+                if (video.muted) {
+                    volumeSlider.value = 0;
+                } else {
+                    volumeSlider.value = video.volume || 0.8;
+                }
+                updateVolumeIcon();
+            });
+
+            function updateVolumeIcon() {
+                if (video.muted || video.volume === 0) {
+                    muteBtn.innerHTML = '<i class="fa-solid fa-volume-xmark text-neon-pink"></i>';
+                } else if (video.volume < 0.5) {
+                    muteBtn.innerHTML = '<i class="fa-solid fa-volume-low"></i>';
+                } else {
+                    muteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                }
+            }
+
+            // Rewind / Forward 5s
+            rewindBtn.addEventListener('click', () => video.currentTime = Math.max(0, video.currentTime - 5));
+            forwardBtn.addEventListener('click', () => video.currentTime = Math.min(video.duration, video.currentTime + 5));
+
+            document.querySelectorAll('.speed-opt').forEach(opt => {
+                opt.addEventListener('click', (e) => {
+                    const speed = parseFloat(e.target.dataset.speed);
+                    video.playbackRate = speed;
+                    document.getElementById('speedBtn').innerText = `${speed}x`;
+                    showToast(`Oynatma Hızı: ${speed}x`);
+                });
+            });
+
+            // Picture in Picture
+            pipBtn.addEventListener('click', async () => {
+                try {
+                    if (document.pictureInPictureElement) {
+                        await document.exitPictureInPicture();
+                    } else if (document.pictureInPictureEnabled) {
+                        await video.requestPictureInPicture();
+                    }
+                } catch (err) {
+                    showToast("PiP Modu Desteklenmiyor", "fa-circle-xmark");
+                }
+            });
+
+            // Fullscreen
+            fullscreenBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    screenWrapper.requestFullscreen().catch(err => {
+                        showToast("Tam ekran yapılamadı", "fa-circle-xmark");
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
+            function initAudioContext() {
+                if (!audioCtx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    audioCtx = new AudioContext();
+                    analyser = audioCtx.createAnalyser();
+                    analyser.fftSize = 128;
+
+                    try {
+                        audioSource = audioCtx.createMediaElementSource(video);
+                        audioSource.connect(analyser);
+                        analyser.connect(audioCtx.destination);
+                    } catch (e) {
+                        console.warn("Audio source already created or CORS issue", e);
+                    }
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+            }
+
+            // Visualizer Renderer Loop
+            function renderVisualizer() {
+                requestAnimationFrame(renderVisualizer);
+
+                if (!analyser || (!isVisualizerActive && video.tagName === 'VIDEO' && !audioCover.classList.contains('flex'))) {
+                    visualizerCanvas.classList.add('hidden');
+                    return;
+                }
+
+                visualizerCanvas.classList.remove('hidden');
+                visualizerCanvas.width = visualizerCanvas.clientWidth;
+                visualizerCanvas.height = visualizerCanvas.clientHeight;
+
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                analyser.getByteFrequencyData(dataArray);
+
+                const width = visualizerCanvas.width;
+                const height = visualizerCanvas.height;
+
+                visualizerCtx.clearRect(0, 0, width, height);
+
+                const barWidth = (width / bufferLength) * 2.2;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    const barHeight = (dataArray[i] / 255) * (height * 0.6);
+
+                    // Gradient Fill for Visualizer
+                    const gradient = visualizerCtx.createLinearGradient(0, height, 0, height - barHeight);
+                    gradient.addColorStop(0, '#00f2fe');
+                    gradient.addColorStop(1, '#f72585');
+
+                    visualizerCtx.fillStyle = gradient;
+                    visualizerCtx.shadowBlur = 10;
+                    visualizerCtx.shadowColor = '#00f2fe';
+                    
+                    // Draw Rounded Top Bars
+                    visualizerCtx.fillRect(x, height - barHeight, barWidth - 3, barHeight);
+
+                    x += barWidth;
+                }
+            }
+            renderVisualizer();
+
+            function renderAmbientGlow() {
+                if (!video.paused && !video.ended && isGlowActive && video.videoWidth > 0) {
+                    ambientCanvas.width = 160;
+                    ambientCanvas.height = 90;
+                    ambientCtx.drawImage(video, 0, 0, ambientCanvas.width, ambientCanvas.height);
+                }
+                requestAnimationFrame(renderAmbientGlow);
+            }
+            renderAmbientGlow();
+
+            document.getElementById('toggleGlowBtn').addEventListener('click', () => {
+                isGlowActive = !isGlowActive;
+                ambientCanvas.style.opacity = isGlowActive ? "0.45" : "0";
+                showToast(isGlowActive ? "Aura Parlaması Açık" : "Aura Parlaması Kapalı");
+            });
+
+            document.getElementById('toggleVisualizerBtn').addEventListener('click', () => {
+                isVisualizerActive = !isVisualizerActive;
+                showToast(isVisualizerActive ? "Ses Görselleştirici Açık" : "Ses Görselleştirici Kapalı");
+            });
+
+            function loadMediaSource(src, title, desc, isAudio = false) {
+                video.pause();
+                video.src = src;
+                video.load();
+
+                mediaTitleDisplay.innerText = title;
+                mediaDescDisplay.innerText = desc;
+
+                const ext = src.split('.').pop().toUpperCase().split('?')[0] || (isAudio ? 'MP3' : 'MP4');
+                formatBadge.innerText = ext.length > 4 ? 'MEDIA' : ext;
+
+                if (isAudio) {
+                    audioCover.classList.remove('hidden');
+                    audioCover.classList.add('flex');
+                    document.getElementById('audioTitle').innerText = title;
+                    document.getElementById('audioArtist').innerText = desc;
+                    isVisualizerActive = true;
+                } else {
+                    audioCover.classList.add('hidden');
+                    audioCover.classList.remove('flex');
+                }
+
+                video.play().then(() => {
+                    initAudioContext();
+                }).catch(() => {});
+
+                showToast(`Yükleniyor: ${title}`);
+            }
+
+            // Shortcuts Modal
+            shortcutsBtn.addEventListener('click', () => shortcutsModal.classList.remove('hidden'));
+            closeShortcutsBtn.addEventListener('click', () => shortcutsModal.classList.add('hidden'));
+
+            video.addEventListener('click', togglePlay);
+            playPauseBtn.addEventListener('click', togglePlay);
+            video.addEventListener('play', updatePlayIcon);
+            video.addEventListener('pause', updatePlayIcon);
+            video.addEventListener('timeupdate', updateProgress);
+
+            // Auto Hide Controls on Mouse Inactivity
+            screenWrapper.addEventListener('mousemove', () => {
+                customControls.classList.remove('opacity-0');
+                clearTimeout(controlsTimeout);
+                controlsTimeout = setTimeout(() => {
+                    if (!video.paused) {
+                        customControls.classList.add('opacity-0');
+                    }
+                }, 3000);
+            });
+
+            // Global Keyboard Shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (document.activeElement.tagName === 'INPUT') return;
+
+                switch (e.code) {
+                    case 'Space':
+                        e.preventDefault();
+                        togglePlay();
+                        break;
+                    case 'ArrowRight':
+                        video.currentTime = Math.min(video.duration, video.currentTime + 5);
+                        break;
+                    case 'ArrowLeft':
+                        video.currentTime = Math.max(0, video.currentTime - 5);
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        video.volume = Math.min(1, video.volume + 0.1);
+                        volumeSlider.value = video.volume;
+                        updateVolumeIcon();
+                        break;
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        video.volume = Math.max(0, video.volume - 0.1);
+                        volumeSlider.value = video.volume;
+                        updateVolumeIcon();
+                        break;
+                    case 'KeyM':
+                        muteBtn.click();
+                        break;
+                    case 'KeyF':
+                        fullscreenBtn.click();
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

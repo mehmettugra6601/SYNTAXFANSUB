@@ -7,11 +7,14 @@
     <meta name="author" content="SYNTAX FANSUB" />
     <title>SYNTAX FANSUB - Kaliteli Altyazı & Dublaj Topluluğu</title>
 
+    <!-- Syn-chan Favicon -->
+    <link rel="icon" type="image/png" href="syn-chan.png" />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <!-- Google Fonts: Inter, JetBrains Mono, Plus Jakarta Sans -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
 
     <script>
@@ -41,7 +44,6 @@
     </script>
 
     <style>
-        /* ===== SYNTAX FANSUB Özel Stilleri ===== */
         :root {
             --bg-main: #0a0d14;
             --bg-card: rgba(19, 24, 38, 0.7);
@@ -66,12 +68,75 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background-color 0.4s ease;
+        }
+
+        /* ===== PRELOADER / YÜKLEME EKRANI STİLLERİ ===== */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background-color: #0a0d14;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .preloader-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+        }
+
+        .preloader-bar-bg {
+            width: 280px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin: 1.2rem 0;
+        }
+
+        .preloader-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+            transition: width 4s linear;
+            box-shadow: 0 0 10px var(--neon-blue);
         }
 
         :focus-visible {
             outline: 2px solid var(--neon-blue);
             outline-offset: 2px;
             border-radius: 4px;
+        }
+
+        /* Sinema Modu */
+        body.cinema-mode {
+            background-color: #030407 !important;
+        }
+        body.cinema-mode header,
+        body.cinema-mode footer,
+        body.cinema-mode .contact-section,
+        body.cinema-mode .features,
+        body.cinema-mode .about-section,
+        body.cinema-mode .glow-1,
+        body.cinema-mode .glow-2 {
+            opacity: 0.08 !important;
+            pointer-events: none !important;
+            filter: blur(4px);
+            transition: opacity 0.4s ease, filter 0.4s ease;
+        }
+        body.cinema-mode .syntax-player-container {
+            box-shadow: 0 0 50px rgba(0, 242, 254, 0.25);
+            z-index: 1001;
         }
 
         /* Arka plan ışıltıları */
@@ -106,6 +171,7 @@
             background: rgba(10, 13, 20, 0.85);
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
+            transition: opacity 0.4s ease;
         }
         .nav-container {
             max-width: 1200px;
@@ -172,13 +238,16 @@
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
-            transition: background 0.3s, border-color 0.3s;
-            display: inline-block;
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             cursor: pointer;
         }
         .btn-secondary:hover {
             background: rgba(0, 242, 254, 0.1);
             border-color: var(--neon-blue);
+            color: var(--neon-blue);
         }
 
         /* Hero */
@@ -362,16 +431,12 @@
             font-weight: 600;
         }
 
-        /* ===== AETHER NEON MEDIA PLAYER (Özel Tasarım) ===== */
         .glass-panel {
             background: rgba(19, 24, 38, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(0, 242, 254, 0.15);
-        }
-        .glass-panel-hover:hover {
-            border-color: rgba(0, 242, 254, 0.4);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            border-radius: 16px;
         }
 
         .ambient-glow {
@@ -380,30 +445,6 @@
             transition: opacity 0.5s ease;
         }
 
-        .text-glow-blue {
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
-        }
-        .text-glow-pink {
-            text-shadow: 0 0 10px rgba(247, 37, 133, 0.6);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(10, 13, 20, 0.5);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(0, 242, 254, 0.2);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 242, 254, 0.5);
-        }
-
-        /* Oynatıcı içindeki iframe'i tam kapla */
         #screenWrapper iframe {
             width: 100%;
             height: 100%;
@@ -411,7 +452,168 @@
             display: block;
         }
 
-        /* Bölüm listesi */
+        .server-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .server-btn:hover {
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            background: rgba(0, 242, 254, 0.08);
+        }
+        .server-btn.active-server {
+            background: rgba(0, 242, 254, 0.15);
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.3);
+            font-weight: 600;
+        }
+
+        .skip-intro-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(247, 37, 133, 0.85);
+            color: #fff;
+            border: 1px solid var(--neon-pink);
+            padding: 8px 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 20;
+            backdrop-filter: blur(6px);
+            transition: all 0.2s ease;
+            box-shadow: 0 0 15px rgba(247, 37, 133, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .skip-intro-btn:hover {
+            background: rgba(247, 37, 133, 1);
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(247, 37, 133, 0.7);
+        }
+
+        .credits-card {
+            background: rgba(10, 13, 20, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        .credits-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .fansub-tag {
+            background: var(--neon-blue);
+            color: #0a0d14;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+        .credits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+        }
+        .credit-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--neon-blue);
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+        .credit-box .role {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .credit-box .author {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .reaction-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .react-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .react-btn:hover {
+            border-color: var(--neon-blue);
+            background: rgba(0, 242, 254, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .spoiler-box {
+            background: rgba(247, 37, 133, 0.05);
+            border: 1px dashed rgba(247, 37, 133, 0.4);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .spoiler-box:hover {
+            border-color: var(--neon-pink);
+            background: rgba(247, 37, 133, 0.1);
+        }
+        .spoiler-title {
+            color: var(--neon-pink);
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .spoiler-text {
+            display: none;
+            margin-top: 8px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+        .spoiler-box.open {
+            background: rgba(19, 24, 38, 0.8);
+            border-style: solid;
+            border-color: var(--neon-blue);
+        }
+        .spoiler-box.open .spoiler-title {
+            display: none;
+        }
+        .spoiler-box.open .spoiler-text {
+            display: block;
+        }
+
         .episode-section {
             margin-top: 2rem;
         }
@@ -476,7 +678,6 @@
             color: var(--neon-blue);
         }
 
-        /* Features & About */
         .features {
             max-width: 1200px;
             margin: 4rem auto;
@@ -531,7 +732,6 @@
             font-size: 1.05rem;
         }
 
-        /* Contact */
         .contact-section {
             max-width: 1200px;
             margin: 4rem auto 6rem auto;
@@ -572,14 +772,13 @@
             background: rgba(0, 242, 254, 0.08);
         }
 
-        /* Toast */
         #toast {
             position: fixed;
             bottom: 24px;
             right: 24px;
             z-index: 9999;
             padding: 12px 20px;
-            background: rgba(19, 24, 38, 0.9);
+            background: rgba(19, 24, 38, 0.95);
             border: 1px solid var(--neon-blue);
             border-radius: 12px;
             color: var(--text-main);
@@ -606,9 +805,9 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             background: rgba(10, 13, 20, 0.9);
+            transition: opacity 0.4s ease;
         }
 
-        /* Responsive */
         @media (max-width: 900px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -629,6 +828,29 @@
     </style>
 </head>
 <body>
+
+    <!-- ===== 🎧 YÜKLEME EKRANI (PRELOADER) ===== -->
+    <div id="preloader">
+        <div class="relative mb-3">
+            <img src="syn-chan.png" alt="Syn-chan" class="preloader-avatar">
+            <span class="absolute -bottom-2 -right-2 bg-pink-600 text-white text-[10px] font-mono px-2 py-0.5 rounded-full font-bold shadow-lg animate-bounce">
+                Syn-chan
+            </span>
+        </div>
+
+        <div class="preloader-bar-bg">
+            <div id="preloader-bar" class="preloader-bar-fill"></div>
+        </div>
+
+        <div class="max-w-md text-center bg-cyber-card border border-cyber-border p-4 rounded-xl backdrop-blur-md shadow-2xl">
+            <p class="text-xs font-mono text-neon-blue mb-1 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-lightbulb"></i> <span>SYNTAX-FACTS</span>
+            </p>
+            <p id="preloader-fact" class="text-sm text-cyber-text font-medium">
+                Sistemler başlatılıyor...
+            </p>
+        </div>
+    </div>
 
     <div class="glow-1"></div>
     <div class="glow-2"></div>
@@ -654,6 +876,12 @@
     <main id="main-content">
         <section class="hero" id="ana-sayfa">
             <div class="hero-text">
+                <!-- Syn-chan Karşılama Rozeti -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyber-card border border-neon-pink/40 mb-4 text-xs font-mono text-pink-400">
+                    <span class="animate-pulse">🎧</span>
+                    <span>Syn-chan: "Milisaniyelik senkron hazır, iyi seyirler!"</span>
+                </div>
+
                 <h1>Tutku ve Teknoloji <span>SYNTAX Standartlarında</span> Buluşuyor.</h1>
                 <p>
                     SYNTAX FANSUB olarak, en sevdiğiniz içerikleri milisaniyelik senkronizasyon, doğal bir Türkçe dili ve yüksek kaliteli ses/görsel standartlarıyla sunuyoruz. İzleme keyfinizi profesyonel bir çizgiye taşıyoruz.
@@ -663,23 +891,41 @@
                     <a href="#iletisim" class="btn-secondary" aria-label="İletişim Bölümüne Git">İletişime Geç</a>
                 </div>
             </div>
+
+            <!-- SYN-CHAN MASKOT GÖRSELİ -->
             <div class="hero-image-container">
-                <img src="B.png" alt="SYNTAX FANSUB Afişi" class="hero-image">
+                <img src="syn-chan.png" alt="Syn-chan - SYNTAX FANSUB Resmi Maskotu" class="hero-image">
             </div>
         </section>
 
         <section class="anime-catalog-section" id="animeler-bolumu">
             <h2 class="section-title">Yayınlanan Projeler</h2>
             <div class="anime-grid">
+                <!-- Blue Lock Kartı -->
                 <div tabindex="0" class="anime-card" onclick="openAnime('bluelock')" onkeydown="if(event.key==='Enter') openAnime('bluelock')" aria-label="Blue Lock animesini aç">
                     <div class="anime-card-img-wrapper">
-                        <img src="blue-lock.jfif" alt="Blue Lock Anime Kapağı" onerror="this.src='B.png'">
+                        <img src="blue-lock.jfif" alt="Blue Lock Anime Kapağı" onerror="this.src='syn-chan.png'">
                         <div class="anime-badge">Sezon 1</div>
                     </div>
                     <div class="anime-card-content">
                         <div>
                             <h3>Blue Lock</h3>
                             <p>Spor, Rekabet, Aksiyon • Türkçe Altyazılı</p>
+                        </div>
+                        <button class="btn-primary" style="width: 100%; text-align: center; margin-top: 1rem;" tabindex="-1">Hemen İzle</button>
+                    </div>
+                </div>
+
+                <!-- Horimiya Kartı -->
+                <div tabindex="0" class="anime-card" onclick="openAnime('horimiya')" onkeydown="if(event.key==='Enter') openAnime('horimiya')" aria-label="Horimiya animesini aç">
+                    <div class="anime-card-img-wrapper">
+                        <img src="hori.jfif" alt="Horimiya Anime Kapağı" onerror="this.src='syn-chan.png'">
+                        <div class="anime-badge">Sezon 1</div>
+                    </div>
+                    <div class="anime-card-content">
+                        <div>
+                            <h3>Horimiya</h3>
+                            <p>Romantik, Komedi, Okul • Türkçe Altyazılı</p>
                         </div>
                         <button class="btn-primary" style="width: 100%; text-align: center; margin-top: 1rem;" tabindex="-1">Hemen İzle</button>
                     </div>
@@ -713,7 +959,7 @@
         </section>
     </main>
 
-    <!-- ===== WATCH VIEW (Özel Neon Oynatıcı ile) ===== -->
+    <!-- ===== WATCH VIEW ===== -->
     <section class="watch-view" id="watch-view">
         <button class="back-btn" onclick="goHome()" aria-label="Ana Sayfaya Dön">
             <i class="fa-solid fa-arrow-left"></i> Animelere Dön
@@ -721,26 +967,75 @@
 
         <div class="watch-container">
             <div class="watch-header">
-                <h2 id="watch-anime-title" class="section-title" style="margin-bottom: 0;">Blue Lock</h2>
-                <div id="watch-episode-badge" class="ep-badge-active">1. Bölüm</div>
+                <div>
+                    <h2 id="watch-anime-title" class="section-title" style="margin-bottom: 0;">Anime Başlığı</h2>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="btn-secondary" onclick="toggleCinemaMode()" title="Işıkları Karart/Aç">
+                        <i class="fa-solid fa-lightbulb"></i> <span id="cinema-btn-text">Işıkları Kapat</span>
+                    </button>
+                    <div id="watch-episode-badge" class="ep-badge-active">1. Bölüm</div>
+                </div>
             </div>
 
-            <!-- Neon Oynatıcı Kapsayıcısı -->
             <div class="syntax-player-container glass-panel p-2 md:p-4 shadow-2xl overflow-hidden relative">
-                <!-- Ambiyans Işıltısı (canlı gradient) -->
                 <canvas id="ambientCanvas" class="ambient-glow absolute inset-0 w-full h-full pointer-events-none scale-110 z-0"></canvas>
 
-                <!-- Ekran Kapsayıcısı -->
-                <div id="screenWrapper" class="relative w-full aspect-video bg-black/80 rounded-xl overflow-hidden border border-cyber-border z-10">
-                    <!-- İFRAME KORUNUYOR -->
-                    <iframe id="syntax-iframe" src="" frameborder="0" allowfullscreen style="width:100%; height:100%;"></iframe>
+                <div id="server-bar" class="relative z-10 flex items-center justify-between pb-3 px-1 mb-3 border-b border-cyber-border/40">
+                    <div class="flex items-center gap-2 text-xs font-mono text-cyber-subtext">
+                        <i class="fa-solid fa-server text-neon-blue"></i>
+                        <span>SUNUCU SEÇİMİ:</span>
+                    </div>
+                    <div id="server-buttons-container" class="flex items-center gap-2">
+                        <!-- Sunucular -->
+                    </div>
                 </div>
+
+                <div id="screenWrapper" class="relative w-full aspect-video bg-black/80 rounded-xl overflow-hidden border border-cyber-border z-10">
+                    <iframe id="syntax-iframe" src="" frameborder="0" allowfullscreen style="width:100%; height:100%;"></iframe>
+                    
+                    <button id="skip-intro-btn" class="skip-intro-btn" onclick="skipIntro()">
+                        <i class="fa-solid fa-forward"></i> Introyu Atla (+85s)
+                    </button>
+                </div>
+            </div>
+
+            <div class="credits-card">
+                <div class="credits-header">
+                    <span class="fansub-tag">SYNTAX FANSUB</span>
+                    <h4 class="font-bold text-sm text-slate-200">Bölüm Çeviri & Proje Ekibi</h4>
+                </div>
+                <div class="credits-grid">
+                    <div class="credit-box">
+                        <span class="role">Çeviri</span>
+                        <span class="author">SYNTAX Team</span>
+                    </div>
+                    <div class="credit-box">
+                        <span class="role">Redaksiyon & Edit</span>
+                        <span class="author">SYNTAX Team</span>
+                    </div>
+                    <div class="credit-box">
+                        <span class="role">Encode & Sub</span>
+                        <span class="author">FFmpeg Engine</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reaction-bar">
+                <button class="react-btn" onclick="addReaction('fire')">🔥 Efsane <span id="count-fire">18</span></button>
+                <button class="react-btn" onclick="addReaction('heart')">❤️ Harika <span id="count-heart">32</span></button>
+                <button class="react-btn" onclick="addReaction('shock')">🤯 Şok Edici <span id="count-shock">7</span></button>
+            </div>
+
+            <div class="spoiler-box" onclick="this.classList.toggle('open')">
+                <span class="spoiler-title"><i class="fa-solid fa-triangle-exclamation"></i> ⚠️ Spoiler İçeren Yorum (Görmek için tıklayın)</span>
+                <p class="spoiler-text"><strong>SYNTAX Notu:</strong> Bölümün sonundaki gelişme gelecek sezonun kurgusunu tamamen değiştiriyor, kaçırmayın!</p>
             </div>
 
             <div class="episode-section">
                 <div class="ep-header">
                     <h3><i class="fa-solid fa-list-ul"></i> Bölüm Seçimi</h3>
-                    <span id="ep-count-badge" class="ep-count">2 Bölüm</span>
+                    <span id="ep-count-badge" class="ep-count">0 Bölüm</span>
                 </div>
                 <ul id="episode-list-container" class="episode-grid"></ul>
             </div>
@@ -774,19 +1069,74 @@
     </footer>
 
     <script>
-        // ===== SYNTAX FANSUB VERİ VE KONTROL =====
+        // ===== SYN-CHAN PRELOADER / YÜKLEME EKRANI BİLGİLERİ =====
+        const syntaxFacts = [
+            "Biliyor muydunuz? SYNTAX FANSUB'da tüm altyazılar milisaniyelik zamanlama hassasiyetiyle hazırlanır!",
+            "Syn-chan der ki: 'B-Bölümü geciktirmedim tamam mı? Sadece senkronu mükemmelleştiriyordum, b-baka!' 🎧",
+            "Sitemizde izlediğiniz içerikler reklamsız, yüksek çözünürlüklü ve kesintisiz sunucu altyapısıyla çalışır.",
+            "Işıkları Kapat butonuna basarak oynatıcıyı tam odaklı sinema moduna geçirebileceğinizi biliyor muydunuz? 💡",
+            "SYNTAX FANSUB, topluluk odaklı ve özgür altyazı prensibiyle (CC0) içerik üretmektedir! ⚡",
+            "Syn-chan'in kulaklıklarındaki 'S' logosu SYNTAX FANSUB'ın kalite mührüdür! ✨"
+        ];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Rastgele Bilgi Seçimi
+            const randomFact = syntaxFacts[Math.floor(Math.random() * syntaxFacts.length)];
+            const factElem = document.getElementById("preloader-fact");
+            if (factElem) factElem.innerText = randomFact;
+
+            // İlerleme çubuğunu başlat (4 Saniye)
+            setTimeout(() => {
+                const bar = document.getElementById("preloader-bar");
+                if (bar) bar.style.width = "100%";
+            }, 50);
+
+            // 4 Saniye sonra Preloader'ı kapat
+            setTimeout(() => {
+                const preloader = document.getElementById("preloader");
+                if (preloader) {
+                    preloader.style.opacity = "0";
+                    preloader.style.visibility = "hidden";
+                }
+            }, 4000);
+        });
+
+        // ===== ANİME VERİLERİ VE FONKSİYONLAR =====
         const animeData = {
             bluelock: {
                 title: "Blue Lock",
                 episodes: [
-                    { title: "1. Bölüm: Hayal", src: "https://video.sibnet.ru/shell.php?videoid=6250244" },
-                    { title: "2. Bölüm: Canavar", src: "https://video.sibnet.ru/shell.php?videoid=6250243" }
+                    { 
+                        title: "1. Bölüm: Hayal", 
+                        servers: [
+                            { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6250244" }
+                        ]
+                    },
+                    { 
+                        title: "2. Bölüm: Canavar", 
+                        servers: [
+                            { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6250243" }
+                        ]
+                    }
+                ]
+            },
+            horimiya: {
+                title: "Horimiya",
+                episodes: [
+                    { 
+                        title: "1. Bölüm: A Tiny Happenstance", 
+                        servers: [
+                            { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/16Mm2LY_1BSMwrJ6KosWhi6RBH_HdYUsT/preview" },
+                            { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6251630" }
+                        ]
+                    }
                 ]
             }
         };
 
         let currentActiveAnime = null;
         let currentActiveEpIndex = 0;
+        let currentActiveServerIndex = 0;
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
@@ -802,6 +1152,7 @@
 
             currentActiveAnime = data;
             currentActiveEpIndex = 0;
+            currentActiveServerIndex = 0;
 
             document.getElementById("main-content").style.display = "none";
             document.getElementById("watch-view").classList.add("active");
@@ -836,13 +1187,61 @@
             });
         }
 
+        function renderServerSwitcher() {
+            const serverContainer = document.getElementById("server-buttons-container");
+            serverContainer.innerHTML = "";
+
+            if (!currentActiveAnime || !currentActiveAnime.episodes[currentActiveEpIndex]) return;
+
+            const ep = currentActiveAnime.episodes[currentActiveEpIndex];
+            const servers = ep.servers || [{ name: "Varsayılan", icon: "fa-solid fa-play", src: ep.src }];
+
+            servers.forEach((server, sIdx) => {
+                const btn = document.createElement("button");
+                btn.className = `server-btn ${sIdx === currentActiveServerIndex ? 'active-server' : ''}`;
+                btn.innerHTML = `<i class="${server.icon || 'fa-solid fa-server'}"></i> ${server.name}`;
+                btn.onclick = () => selectServer(sIdx);
+                serverContainer.appendChild(btn);
+            });
+        }
+
+        function selectServer(serverIndex) {
+            if (!currentActiveAnime || !currentActiveAnime.episodes[currentActiveEpIndex]) return;
+            const ep = currentActiveAnime.episodes[currentActiveEpIndex];
+            const servers = ep.servers || [{ name: "Varsayılan", src: ep.src }];
+
+            if (!servers[serverIndex]) return;
+
+            currentActiveServerIndex = serverIndex;
+            const targetServer = servers[serverIndex];
+
+            document.getElementById("syntax-iframe").src = targetServer.src;
+            renderServerSwitcher();
+            showToast(`${targetServer.name} sunucusuna geçildi`);
+        }
+
+        function changeEpisode(index) {
+            if (!currentActiveAnime || !currentActiveAnime.episodes[index]) return;
+
+            currentActiveEpIndex = index;
+            currentActiveServerIndex = 0;
+            const ep = currentActiveAnime.episodes[index];
+
+            document.getElementById("watch-episode-badge").innerText = ep.title.split(':')[0] || ep.title;
+            renderServerSwitcher();
+            selectServer(0);
+            renderEpisodeList();
+        }
+
         function goHome() {
+            document.body.classList.remove('cinema-mode');
             document.getElementById("watch-view").classList.remove("active");
             document.getElementById("main-content").style.display = "block";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function scrollToSection(sectionId) {
+            document.body.classList.remove('cinema-mode');
             const watchView = document.getElementById("watch-view");
             if (watchView.classList.contains("active")) {
                 watchView.classList.remove("active");
@@ -854,27 +1253,42 @@
             }, 50);
         }
 
-        function changeEpisode(index) {
-            if (!currentActiveAnime || !currentActiveAnime.episodes[index]) return;
-
-            currentActiveEpIndex = index;
-            const ep = currentActiveAnime.episodes[index];
-
-            document.getElementById("watch-episode-badge").innerText = ep.title.split(':')[0] || ep.title;
-            document.getElementById("syntax-iframe").src = ep.src;
-
-            renderEpisodeList();
-            showToast(`${ep.title} Oynatılıyor`);
+        function toggleCinemaMode() {
+            const isCinema = document.body.classList.toggle('cinema-mode');
+            const btnText = document.getElementById('cinema-btn-text');
+            if (btnText) {
+                btnText.innerText = isCinema ? "Işıkları Aç" : "Işıkları Kapat";
+            }
+            showToast(isCinema ? "Sinema Modu Açıldı" : "Sinema Modu Kapatıldı");
         }
 
-        // ===== AMBİYANS IŞIRTISI (CANLI GRADIENT) =====
+        function skipIntro() {
+            showToast("Intro atlanıyor... (+85s)");
+            const iframe = document.getElementById("syntax-iframe");
+            if (iframe && iframe.src) {
+                iframe.focus();
+            }
+        }
+
+        function addReaction(type) {
+            const countSpan = document.getElementById(`count-${type}`);
+            if (countSpan) {
+                let currentCount = parseInt(countSpan.innerText);
+                countSpan.innerText = currentCount + 1;
+                showToast("Tepkiniz kaydedildi!");
+            }
+        }
+
+        // Ambient Glow Canvas Animation
         document.addEventListener("DOMContentLoaded", function() {
             const ambientCanvas = document.getElementById('ambientCanvas');
+            if (!ambientCanvas) return;
             const ambientCtx = ambientCanvas.getContext('2d');
 
             let hue = 0;
 
             function renderAmbientGlow() {
+                if (!ambientCanvas.parentElement) return;
                 const rect = ambientCanvas.parentElement.getBoundingClientRect();
                 ambientCanvas.width = rect.width || 160;
                 ambientCanvas.height = rect.height || 90;
