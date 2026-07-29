@@ -901,6 +901,21 @@
         <section class="anime-catalog-section" id="animeler-bolumu">
             <h2 class="section-title">Yayınlanan Projeler</h2>
             <div class="anime-grid">
+                <!-- Rich Girl Caretaker Kartı -->
+                <div tabindex="0" class="anime-card" onclick="openAnime('richgirl')" onkeydown="if(event.key==='Enter') openAnime('richgirl')" aria-label="Rich Girl Caretaker animesini aç">
+                    <div class="anime-card-img-wrapper">
+                        <img src="rich.jfif" alt="Rich Girl Caretaker Anime Kapağı" onerror="this.src='syn-chan.png'">
+                        <div class="anime-badge">Sezon 1</div>
+                    </div>
+                    <div class="anime-card-content">
+                        <div>
+                            <h3>Rich Girl Caretaker</h3>
+                            <p>Romantik, Drama, Okul • Türkçe Altyazılı</p>
+                        </div>
+                        <button class="btn-primary" style="width: 100%; text-align: center; margin-top: 1rem;" tabindex="-1">Hemen İzle</button>
+                    </div>
+                </div>
+
                 <!-- Blue Lock Kartı -->
                 <div tabindex="0" class="anime-card" onclick="openAnime('bluelock')" onkeydown="if(event.key==='Enter') openAnime('bluelock')" aria-label="Blue Lock animesini aç">
                     <div class="anime-card-img-wrapper">
@@ -1007,7 +1022,8 @@
                 </div>
 
                 <div id="screenWrapper" class="relative w-full aspect-video bg-black/80 rounded-xl overflow-hidden border border-cyber-border z-10">
-                    <iframe id="syntax-iframe" src="" frameborder="0" allowfullscreen style="width:100%; height:100%;"></iframe>
+                    <!-- Pop-Up Koruma Özelliği eklendi -->
+                    <iframe id="syntax-iframe" src="" frameborder="0" allowfullscreen style="width:100%; height:100%;" sandbox="allow-scripts allow-same-origin"></iframe>
                     
                     <button id="skip-intro-btn" class="skip-intro-btn" onclick="skipIntro()">
                         <i class="fa-solid fa-forward"></i> Introyu Atla (+85s)
@@ -1118,6 +1134,32 @@
 
         // ===== ANİME VERİLERİ VE FONKSİYONLAR =====
         const animeData = {
+            richgirl: {
+                title: "Rich Girl Caretaker",
+                episodes: [
+                    { 
+                        title: "1. Bölüm", 
+                        servers: [
+                            { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6252820" },
+                            { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/1wOnfJi9C8PfCApLrE7jakPGiVX0_P0pU/preview" }
+                        ]
+                    },
+                    { 
+                        title: "2. Bölüm", 
+                        servers: [
+                            { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6252831" },
+                            { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/16jpso5UNAsiJ8xOw20e-5HnY2JLs03FX/preview" }
+                        ]
+                    },
+                    { 
+                        title: "3. Bölüm", 
+                        servers: [
+                            { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6252861" },
+                            { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/1bIDG3DC7OP-cDLJlE64z6Fx0gytj2eRt/preview" }
+                        ]
+                    }
+                ]
+            },
             bluelock: {
                 title: "Blue Lock",
                 episodes: [
