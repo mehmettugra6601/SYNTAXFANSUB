@@ -71,7 +71,7 @@
             transition: background-color 0.4s ease;
         }
 
-        /* ===== PRELOADER / YÜKLEME EKRANI STİLLERİ ===== */
+        /* ===== PRELOADER STİLLERİ ===== */
         #preloader {
             position: fixed;
             inset: 0;
@@ -418,7 +418,7 @@
             justify-content: space-between;
             margin-bottom: 1.5rem;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
         }
         .ep-badge-active {
             background: rgba(0, 242, 254, 0.1);
@@ -445,6 +445,18 @@
             transition: opacity 0.5s ease;
         }
 
+        /* ===== MOBİL VİDEO OYNATICI VE EKRAN DÜZENİ İYİLEŞTİRMELERİ ===== */
+        #screenWrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            z-index: 10;
+        }
+
         #screenWrapper iframe {
             width: 100%;
             height: 100%;
@@ -452,19 +464,40 @@
             display: block;
         }
 
+        #server-bar {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        #server-buttons-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
         .server-btn {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--border-color);
             color: var(--text-muted);
-            padding: 5px 12px;
+            padding: 6px 12px;
             border-radius: 8px;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-family: 'JetBrains Mono', monospace;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            white-space: nowrap;
         }
         .server-btn:hover {
             border-color: var(--neon-blue);
@@ -481,14 +514,14 @@
 
         .skip-intro-btn {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(247, 37, 133, 0.85);
+            bottom: 12px;
+            right: 12px;
+            background: rgba(247, 37, 133, 0.9);
             color: #fff;
             border: 1px solid var(--neon-pink);
-            padding: 8px 16px;
+            padding: 6px 12px;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             border-radius: 8px;
             cursor: pointer;
             z-index: 20;
@@ -641,19 +674,19 @@
         .episode-grid {
             list-style: none;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 1rem;
         }
         .episode-btn {
             width: 100%;
-            padding: 1rem;
+            padding: 0.8rem 1rem;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
             color: var(--text-main);
             text-align: left;
             cursor: pointer;
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -808,6 +841,19 @@
             transition: opacity 0.4s ease;
         }
 
+        /* ===== MEDYA SORGULARI VE MOBİL KORUMA ===== */
+        @media (min-width: 640px) {
+            .skip-intro-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            .episode-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+
         @media (max-width: 900px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -820,8 +866,19 @@
                 display: none;
             }
         }
+
         @media (max-width: 600px) {
+            .watch-view {
+                padding: 0 1rem;
+            }
             .watch-container {
+                padding: 1rem;
+                border-radius: 14px;
+            }
+            .hero-text h1 {
+                font-size: 2.1rem;
+            }
+            .nav-container {
                 padding: 1rem;
             }
         }
@@ -1011,19 +1068,26 @@
             <div class="syntax-player-container glass-panel p-2 md:p-4 shadow-2xl overflow-hidden relative">
                 <canvas id="ambientCanvas" class="ambient-glow absolute inset-0 w-full h-full pointer-events-none scale-110 z-0"></canvas>
 
-                <div id="server-bar" class="relative z-10 flex items-center justify-between pb-3 px-1 mb-3 border-b border-cyber-border/40">
+                <div id="server-bar">
                     <div class="flex items-center gap-2 text-xs font-mono text-cyber-subtext">
                         <i class="fa-solid fa-server text-neon-blue"></i>
                         <span>SUNUCU SEÇİMİ:</span>
                     </div>
-                    <div id="server-buttons-container" class="flex items-center gap-2">
-                        <!-- Sunucular -->
+                    <div id="server-buttons-container">
+                        <!-- Sunucular dinamik olarak buraya gelecek -->
                     </div>
                 </div>
 
-                <div id="screenWrapper" class="relative w-full aspect-video bg-black/80 rounded-xl overflow-hidden border border-cyber-border z-10">
-                    <!-- Pop-Up Koruma Özelliği eklendi -->
-                    <iframe id="syntax-iframe" src="" frameborder="0" allowfullscreen style="width:100%; height:100%;" sandbox="allow-scripts allow-same-origin"></iframe>
+                <div id="screenWrapper">
+                    <!-- Mobil Tam Ekran İzinleri ve Pop-Up Reklam Engelleme (Sandbox) Eklendi -->
+                    <iframe 
+                        id="syntax-iframe" 
+                        src="" 
+                        frameborder="0" 
+                        allowfullscreen="true" 
+                        allow="autoplay; fullscreen" 
+                        sandbox="allow-scripts allow-same-origin allow-forms">
+                    </iframe>
                     
                     <button id="skip-intro-btn" class="skip-intro-btn" onclick="skipIntro()">
                         <i class="fa-solid fa-forward"></i> Introyu Atla (+85s)
