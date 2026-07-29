@@ -445,7 +445,7 @@
             transition: opacity 0.5s ease;
         }
 
-        /* ===== MOBİL VİDEO OYNATICI VE EKRAN DÜZENİ İYİLEŞTİRMELERİ ===== */
+        /* ===== MOBİL VİDEO OYNATICI VE EKRAN DÜZENİ ===== */
         #screenWrapper {
             position: relative;
             width: 100%;
@@ -841,7 +841,7 @@
             transition: opacity 0.4s ease;
         }
 
-        /* ===== MEDYA SORGULARI VE MOBİL KORUMA ===== */
+        /* ===== MEDYA SORGULARI ===== */
         @media (min-width: 640px) {
             .skip-intro-btn {
                 bottom: 20px;
@@ -933,7 +933,6 @@
     <main id="main-content">
         <section class="hero" id="ana-sayfa">
             <div class="hero-text">
-                <!-- Syn-chan Karşılama Rozeti -->
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyber-card border border-neon-pink/40 mb-4 text-xs font-mono text-pink-400">
                     <span class="animate-pulse">🎧</span>
                     <span>Syn-chan: "Milisaniyelik senkron hazır, iyi seyirler!"</span>
@@ -949,7 +948,6 @@
                 </div>
             </div>
 
-            <!-- SYN-CHAN MASKOT GÖRSELİ -->
             <div class="hero-image-container">
                 <img src="syn-chan.png" alt="Syn-chan - SYNTAX FANSUB Resmi Maskotu" class="hero-image">
             </div>
@@ -1074,12 +1072,13 @@
                         <span>SUNUCU SEÇİMİ:</span>
                     </div>
                     <div id="server-buttons-container">
-                        <!-- Sunucular dinamik olarak buraya gelecek -->
+                        <!-- Sunucular dinamik olarak gelecektir -->
                     </div>
                 </div>
 
                 <div id="screenWrapper">
-                    <!-- Mobil Tam Ekran İzinleri ve Pop-Up Reklam Engelleme (Sandbox) Eklendi -->
+                    <!-- POP-UP ENGELLEYİCİ SANDBOX KORUMASI -->
+                    <!-- 'allow-popups' ve 'allow-popups-to-escape-sandbox' kasten çıkarılarak reklamlar engellenmiştir -->
                     <iframe 
                         id="syntax-iframe" 
                         src="" 
@@ -1175,18 +1174,15 @@
         ];
 
         document.addEventListener("DOMContentLoaded", function() {
-            // Rastgele Bilgi Seçimi
             const randomFact = syntaxFacts[Math.floor(Math.random() * syntaxFacts.length)];
             const factElem = document.getElementById("preloader-fact");
             if (factElem) factElem.innerText = randomFact;
 
-            // İlerleme çubuğunu başlat (4 Saniye)
             setTimeout(() => {
                 const bar = document.getElementById("preloader-bar");
                 if (bar) bar.style.width = "100%";
             }, 50);
 
-            // 4 Saniye sonra Preloader'ı kapat
             setTimeout(() => {
                 const preloader = document.getElementById("preloader");
                 if (preloader) {
@@ -1249,6 +1245,7 @@
                     { 
                         title: "1. Bölüm", 
                         servers: [
+                            { name: "Streamtape", icon: "fa-solid fa-tape", src: "https://streamtape.com/e/K4GjaAp0MMIwDd/alya_b1_final.mp4" },
                             { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6251770" },
                             { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/1-Jz41N8X8M0Y-nT_YvoifHBeE2mXdITS/preview" }
                         ]
@@ -1258,6 +1255,20 @@
                         servers: [
                             { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6251774" },
                             { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/1RbuU36H9J_rjhU9faeiB71UCVmSgE4xL/preview" }
+                        ]
+                    },
+                    { 
+                        title: "3. Bölüm", 
+                        servers: [
+                            { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6253398" },
+                            { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/1U2WogD4Ilw3hYPJdQqDbo8VD1CjF3vqI/preview" }
+                        ]
+                    },
+                    { 
+                        title: "4. Bölüm", 
+                        servers: [
+                            { name: "Sibnet", icon: "fa-solid fa-play", src: "https://video.sibnet.ru/shell.php?videoid=6253387" },
+                            { name: "Google Drive", icon: "fa-brands fa-google-drive", src: "https://drive.google.com/file/d/17SS17JvQPgsmcAnHHQpW1cg53kf3kQsO/preview" }
                         ]
                     }
                 ]
